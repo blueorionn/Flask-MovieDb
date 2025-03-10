@@ -4,7 +4,7 @@ from flask import Flask, render_template
 
 from moviedb.settings import config
 from moviedb.extensions import init_cors
-from moviedb import core, auth
+from moviedb import core
 
 
 def create_app(config_object=config):
@@ -36,7 +36,6 @@ def register_blueprints(app: Flask):
     """Registering blueprints."""
 
     app.register_blueprint(core.views.blueprint)
-    app.register_blueprint(auth.views.blueprint)
 
 
 def register_error_handlers(app: Flask):
