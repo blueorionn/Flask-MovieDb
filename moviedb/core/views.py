@@ -2,12 +2,14 @@
 
 from flask import Blueprint, render_template
 from flask.views import MethodView
+from .func import list_movies
 
 blueprint = Blueprint("core", __name__)
 
 
 class IndexView(MethodView):
     def get(self):
+        print(list_movies())
         return render_template("index.html")
 
 
