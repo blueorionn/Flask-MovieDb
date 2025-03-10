@@ -3,7 +3,7 @@
 from flask import Flask, render_template
 
 from moviedb.settings import config
-from moviedb.extensions import init_cors
+from moviedb.extensions import init_cors, mongo
 from moviedb import core
 
 
@@ -30,6 +30,7 @@ def register_extension(app: Flask):
     """Registering extensions."""
 
     init_cors(app)
+    mongo.init_app(app)
 
 
 def register_blueprints(app: Flask):

@@ -2,6 +2,7 @@
 
 from flask import Flask
 from flask_cors import CORS
+from flask_pymongo import PyMongo
 
 
 # Flask Cors Configuration
@@ -15,3 +16,6 @@ def init_cors(app: Flask):
             }
         },
     )
+
+# Mongodb extension
+mongo = PyMongo()
