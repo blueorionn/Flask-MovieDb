@@ -1,4 +1,5 @@
 """Standalone script to load data to mongodb."""
+
 import os
 import sys
 import argparse
@@ -30,7 +31,7 @@ def main():
 
     # reading file
     json_data = []
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         json_data = json.load(f)
 
     # creating mongoclient
@@ -50,7 +51,6 @@ def main():
     else:
         sys.stdout.write("Inserting single document. \n")
         collection.insert_one(json_data)
-
 
 
 if __name__ == "__main__":
