@@ -1,0 +1,137 @@
+[
+    {
+        "id": "40b5d19b-3513-453f-a2ff-ad47c86b2b57",
+        "title": "The Shawshank Redemption",
+        "release_year": 1994,
+        "rating": 9.3,
+        "genre": "Drama",
+        "poster": "the-shawshank-redemption.jpg",
+        "description": "Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit. The film portrays the man's unique way of dealing with his new, torturous life; along the way he befriends a number of fellow prisoners, most notably a wise long-term inmate named Red"
+    },
+    {
+        "id": "9a761fb8-7465-4985-983d-5faceb3735f0",
+        "title": "The Godfather",
+        "release_year": 1972,
+        "rating": 9.2,
+        "genre": "Crime",
+        "poster": "the-godfather.jpg",
+        "description": "The Godfather 'Don' Vito Corleone is the head of the Corleone mafia family in New York. He is at the event of his daughter's wedding. Michael, Vit's youngest son and a decorated WWII Marine is also present at the wedding. Michael seems to be uninterested in being a part of the family business."
+    },
+    {
+        "id": "7e3dc43a-4978-4d61-9c9b-d77d859b82a7",
+        "title": "The Dark Knight",
+        "release_year": 2008,
+        "rating": 9.0,
+        "genre": "Crime",
+        "poster": "the-dark-knight.jpg",
+        "description": "When a menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman, James Gordon and Harvey Dent must work together to put an end to the madness."
+    },
+    {
+        "id": "c5735bbc-7240-490f-9314-33dec51a46d7",
+        "title": "Parasite",
+        "release_year": 2019,
+        "rating": 8.5,
+        "genre": "Psychological Thriller",
+        "poster": "parasite.jpg",
+        "description": "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan."
+    },
+    {
+        "id": "7d4c2842-c8b9-4a12-b4fd-55e5d3176e68",
+        "title": "Spirited Away",
+        "release_year": 2001,
+        "rating": 8.6,
+        "genre": "Fantasy",
+        "poster": "spirited-away.jpg",
+        "description": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches and spirits, and where humans are changed into beasts."
+    },
+    {
+        "id": "f9c27545-fe3c-45f2-9544-879de45af5b8",
+        "title": "Akira",
+        "release_year": 1998,
+        "rating": 8.0,
+        "genre": "Sci-fi",
+        "poster": "akira.jpg",
+        "description": "A secret military project endangers Neo-Tokyo when it turns a biker gang member into a rampaging psychic psychopath who can only be stopped by a teenager, his gang of biker friends and a group of psychics."
+    },
+    {
+        "id": "a05a89a6-834d-4e0c-9a14-6bb73f1986dc",
+        "title": "The Prestige",
+        "release_year": 2006,
+        "rating": 8.5,
+        "genre": "Mystery",
+        "poster": "the-prestige.jpg",
+        "description": "Set in London in the 1800s, two rival magicians read each others diary containing the secrets of their magic tricks and personal life. As we go back in time when the diaries were written, both magicians become obsessed with their rival's best trick. The tricks, as shown to the audience, look the same, but neither magician can figure out how his opponent does it."
+    },
+    {
+        "id": "e88ad8c6-649a-4f08-b2aa-98b02eab1f82",
+        "title": "Alien",
+        "release_year": 1979,
+        "rating": 8.5,
+        "genre": "Sci-fi",
+        "poster": "alien.jpg",
+        "description": "After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform."
+    },
+    {
+        "id": "8d4ce7a5-4acb-4e31-ac6a-3fab65c1866b",
+        "title": "No Country for Old Men",
+        "release_year": 2007,
+        "rating": 8.2,
+        "genre": "Crime",
+        "poster": "no-country-for-old-men.jpg",
+        "description": "Violence and mayhem ensue after a hunter stumbles upon the aftermath of a drug deal gone wrong and over two million dollars in cash near the Rio Grande."
+    },
+    {
+        "id": "2ce0db9c-597c-4453-9b4a-13972170edcf",
+        "title": "Up",
+        "release_year": 2009,
+        "rating": 8.3,
+        "genre": "Adventure",
+        "poster": "up.jpg",
+        "description": "78-year-old Carl Fredricksen travels to South America in his house equipped with balloons, inadvertently taking a young stowaway."
+    },
+    {
+        "id": "0e48ca43-529c-4493-a912-dad299697e8e",
+        "title": "Interstellar",
+        "release_year": 2014,
+        "rating": 8.7,
+        "genre": "Sci-fi",
+        "poster": "interstellar.jpg",
+        "description": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans."
+    },
+    {
+        "id": "b6b5f111-4bff-41e4-a89d-f6cda1c37b77",
+        "title": "Se7en",
+        "release_year": 1995,
+        "rating": 8.6,
+        "genre": "psychology",
+        "poster": "se7en.jpg",
+        "description": "Two detectives, a rookie and a veteran, hunt a serial killer who uses the seven deadly sins as his motives."
+    },
+    {
+        "id": "2fbf8a1a-b545-4d47-a557-2fc34ae3d8f9",
+        "title": "The Matrix",
+        "release_year": 1999,
+        "rating": 8.7,
+        "genre": "Sci-fi",
+        "poster": "the-matrix.jpg",
+        "description": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence."
+    },
+    {
+        "id": "eee5ef7a-ebe1-4a4b-aca4-f142a910ff09",
+        "title": "V for Vendetta",
+        "release_year": 2005,
+        "rating": 8.1,
+        "genre": "Political Thriller",
+        "poster": "v-for-vendetta.jpg",
+        "description": "In a future British dystopian society, a shadowy freedom fighter, known only by the alias of 'V', plots to overthrow the tyrannical government - with the help of a young woman."
+    },
+    {
+        "id": "d1eb419a-337f-4b02-b379-d6890aa01006",
+        "title": "Howl's Moving Castle",
+        "release_year": 2004,
+        "rating": 8.2,
+        "genre": "Adventure",
+        "poster": "howls-moving-castle.jpg",
+        "description": "When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet insecure young wizard and his companions in his legged, walking castle."
+    }
+]
