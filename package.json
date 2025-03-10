@@ -5,7 +5,8 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watchCss": "npx tailwindcss -i ./moviedb/static/styles/tailwind.css -o ./moviedb/static/styles/style.css --watch",
+    "buildCss": "npx tailwindcss -i ./moviedb/static/styles/tailwind.css -o ./moviedb/static/styles/style.css --minify"
   },
   "repository": {
     "type": "git",
