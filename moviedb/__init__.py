@@ -5,6 +5,7 @@ from flask import Flask, render_template
 from moviedb.settings import config
 from moviedb.extensions import init_cors
 from moviedb import core, auth
+from .middleware import authentication_middleware
 
 
 def create_app(config_object=config):
@@ -14,6 +15,9 @@ def create_app(config_object=config):
     """
     app = Flask(__name__)
     app.config.from_object(config_object)
+
+    # Running middleware
+    app.before_request(authentication_middleware)
 
     # log config_object type
     app.logger.info(f"Using {config_object.__class__.__name__}")

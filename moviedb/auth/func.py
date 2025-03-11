@@ -54,4 +54,7 @@ def create_jwt_token(username: str):
 
 
 def decode_jwt_token(token: str):
-    return jwt.decode(token, os.environ.get("SECRET_KEY"), algorithms="HS256")
+    try:
+        return jwt.decode(token, os.environ.get("SECRET_KEY"), algorithms="HS256")
+    except:
+        return {}
