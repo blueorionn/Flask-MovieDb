@@ -71,7 +71,7 @@ def main():
         "firstname": first_name,
         "last_name": last_name,
         "username": user_name,
-        "password": password,
+        "password": f"{password}",
         "created_at": created_at,
     }
     user_collection.insert_one(data)
