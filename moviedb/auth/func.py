@@ -37,3 +37,4 @@ def authenticate_user(username: str, password: str):
             return False
     else:
         return False
+
