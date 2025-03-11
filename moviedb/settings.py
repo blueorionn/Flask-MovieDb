@@ -1,13 +1,12 @@
 """Application Configuration."""
 
 import os
-from .utils import generate_secret_key
 
 
 class Config:
     """Base Configuration."""
 
-    SECRET_KEY = os.environ.get("SECRET_KEY", generate_secret_key())
+    SECRET_KEY = os.environ["SECRET_KEY"]
     APP_DIR = os.path.abspath(os.path.dirname(__file__))  # This directory
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     # File size restriction
