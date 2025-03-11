@@ -65,6 +65,14 @@ def main():
     sys.stdout.write("Creating or Accessing user collection \n")
     user_collection = db["user"]
 
+    # username should be unique
+    sys.stdout.write("Checking uniqueness of username \n")
+    duplicate_user = user_collection.find_one({"username": user_name})
+
+    if duplicate_user is not None:
+        sys.stdout.write(f"User with {user_name} already exists. \n")
+        sys.exit(1)
+
     # Inserting data
     data = {
         "id": id,
