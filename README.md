@@ -1,4 +1,4 @@
-# FLASK BOOKLIST
+# FLASK MOVIEDB
 
 This project is a Flask-based web application that explores JWT authentication and middlewares. The backend handles user authentication, enforcing secure login/logout mechanisms, and applying middleware for request validation and logging. This setup provides a structured way to learn about jwt based authentication, middleware functions, and nosql database in a Flask environment.
 
@@ -22,8 +22,8 @@ This project is a Flask-based web application that explores JWT authentication a
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/blueorionn/Flask-BookList.git
-   cd Flask-BookList
+   git clone https://github.com/blueorionn/Flask-MovieDb.git
+   cd Flask-MovieDb
    ```
 
 2. Create and activate a virtual environment:
@@ -45,11 +45,7 @@ This project is a Flask-based web application that explores JWT authentication a
    export PYTHONDONTWRITEBYTECODE=1
    export FLASK_ENV="development"
    export SECRET_KEY="your-secret-key"
-   export DB_HOST="your-database-host"
-   export DB_NAME="your-database-name"
-   export DB_USERNAME="your-database-username"
-   export DB_PASSWORD="your-database-password"
-   export DB_PORT="your-database-port"
+   export MONGO_URI="mongo-uri"
    ```
 
 5. Run the Flask app:
