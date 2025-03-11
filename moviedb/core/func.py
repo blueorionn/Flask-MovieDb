@@ -22,6 +22,7 @@ def list_movies():
 
     return movies
 
+
 def get_movie(id: str):
     """Get Movie by Id"""
 
@@ -38,3 +39,21 @@ def get_movie(id: str):
     movie = movie_collection.find_one({"id": id})
 
     return movie
+
+
+def update_movie(movie_id: str, movie_data):
+    """Update the movie document"""
+
+    # creating pymongo client
+    mongo_client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
+
+    # movies database
+    movies_db = mongo_client["movies"]
+
+    # movie collection
+    movie_collection: Collection = movies_db["movie"]
+
+    # update document
+    movie_collection.update_one({"id": movie_id}, {"$set": movie_data})
+
+    return True

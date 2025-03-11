@@ -30,7 +30,7 @@
         <div class="max-w-screen-2xl mx-auto">
           <h1 class="text-xl mx-auto w-max font-semibold text-gray-600">Update Movie Table</h1>
 
-          <form action="/" method="post" class="mx-auto max-w-screen-sm p-4">
+          <form action="/movie/{{ movie.id }}" method="post" class="mx-auto max-w-screen-sm p-4">
             <div class="my-2.5">
               <label for="title" class="my-1 text-base font-semibold text-gray-700">Movie Title</label>
               <input
@@ -48,8 +48,8 @@
               <label for="year" class="my-1 text-base font-semibold text-gray-700">Release Year</label>
               <input
                 type="number"
-                name="year"
-                id="year"
+                name="release_year"
+                id="release_year"
                 placeholder="2024"
                 required
                 class="w-full p-2.5 rounded border border-gray-300"
@@ -93,7 +93,6 @@
                 required
                 class="w-full p-2.5 rounded border border-gray-300"
                 value="{{ movie.poster }}"
-                disabled
               />
             </div>
             <div class="my-2.5">
