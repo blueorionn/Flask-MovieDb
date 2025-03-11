@@ -1,6 +1,8 @@
 import os
 import bcrypt
 import pymongo
+import jwt
+import datetime
 from datetime import timedelta
 from moviedb.utils import is_valid_uuid_v4
 from pymongo.collection import Collection
@@ -38,3 +40,18 @@ def authenticate_user(username: str, password: str):
     else:
         return False
 
+
+def create_jwt_token(username: str):
+    return jwt.encode(
+        {
+            "user": username,
+            "exp": datetime.datetime.utcnow() + timedelta(hours=1),
+            "iat": datetime.datetime.utcnow(),
+        },
+        os.environ.get("SECRET_KEY"),
+        algorithm="HS256",
+    )
+
+
+def decode_jwt_token(token: str):
+    return jwt.decode(token, os.environ.get("SECRET_KEY"), algorithms="HS256")
