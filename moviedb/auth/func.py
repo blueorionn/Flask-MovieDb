@@ -22,7 +22,7 @@ def authenticate_user(username: str, password: str):
     user = user_collection.find_one({"username": username})
 
     # If user exist
-    if user is not None or (not isinstance(user, dict)):
+    if user is not None and isinstance(user, dict):
         # Checking if password is correct
         fetched_user_id, fetched_username = (user["id"], user["username"])
         fetched_password: str = user["password"]
