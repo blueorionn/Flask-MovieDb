@@ -45,7 +45,7 @@ This project is a Flask-based web application that explores JWT authentication a
    export PYTHONDONTWRITEBYTECODE=1
    export FLASK_ENV="development"
    export SECRET_KEY="your-secret-key"
-   export MONGO_URI="mongo-uri"
+   export MONGO_URI="mongodb://username:password@host:port/database?authSource=admin&retryWrites=true&w=majority"
    ```
 
 5. Run the Flask app:
