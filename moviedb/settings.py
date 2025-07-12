@@ -36,9 +36,9 @@ class TestingConfig(Config):
     DEBUG = True
 
 
-if os.environ.get("FLASK_ENV") == "development":
-    config = DevelopmentConfig()
+if os.environ.get("FLASK_ENV") == "production":
+    config = ProductionConfig()
 elif os.environ.get("FLASK_ENV") == "testing":
     config = TestingConfig()
 else:
-    config = ProductionConfig()
+    config = DevelopmentConfig()
