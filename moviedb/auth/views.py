@@ -18,7 +18,7 @@ class LoginView(MethodView):
         if authenticate_user(username, password):
             res = make_response(redirect("/"))
             token = create_jwt_token(username)
-            res.set_cookie("token", token, max_age=3600, httponly=True)
+            res.set_cookie("token", token, max_age=3600, httponly=False, samesite="Lax")
             return res
         else:
             message = {"message": "Username or password is invalid. "}

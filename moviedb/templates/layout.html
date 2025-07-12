@@ -18,15 +18,12 @@
             <span class="self-center whitespace-nowrap text-xl font-semibold">MovieDB</span>
           </a>
           <div class="flex items-center lg:order-2">
-            <a
-              href="/auth/login"
-              class="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
-              >Log in</a
-            >
-            <span
+            <button
+              id="logout"
               class="mr-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
-              >Log out</span
             >
+              Log out
+            </button>
           </div>
         </div>
       </nav>
@@ -37,5 +34,12 @@
     {% endblock %}
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+      // Logout Mechanism
+      const logOutButton = document.querySelector('button#logout');
+      logOutButton.addEventListener('click', function () {
+        document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      });
+    </script>
   </body>
 </html>
