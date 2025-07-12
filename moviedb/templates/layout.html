@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} MovieDb - Collection of Movie List {% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/base.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}" />
+    <!-- Other head tags -->
+    {% block head %} {% endblock %}
+  </head>
+  <body>
+    <header class="mx-auto h-max w-full max-w-screen-2xl p-2.5 lg:p-4">
+      <nav class="w-full border-gray-200 bg-white">
+        <div class="mx-auto flex w-full flex-wrap items-center justify-between">
+          <a href="/" class="flex items-center">
+            <ion-icon name="videocam" class="mx-2 fill-blue-500" size="large"></ion-icon>
+            <span class="self-center whitespace-nowrap text-xl font-semibold">MovieDB</span>
+          </a>
+          <div class="flex items-center lg:order-2">
+            <a
+              href="/auth/login"
+              class="mr-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+              >Log in</a
+            >
+            <span
+              class="mr-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+              >Log out</span
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Dynamic Content -->
+    {% block content %}
+    <!-- Child templates will insert content here -->
+    {% endblock %}
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

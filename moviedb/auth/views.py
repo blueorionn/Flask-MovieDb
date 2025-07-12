@@ -2,14 +2,14 @@
 
 from flask import request, Blueprint, render_template, make_response, redirect
 from flask.views import MethodView
-from .func import authenticate_user, create_jwt_token, decode_jwt_token
+from .func import authenticate_user, create_jwt_token
 
 blueprint = Blueprint("auth", __name__, url_prefix="/auth")
 
 
 class LoginView(MethodView):
     def get(self):
-        return render_template("login.html")
+        return render_template("auth/login.html")
 
     def post(self):
         username = request.form.get("username")
@@ -22,7 +22,7 @@ class LoginView(MethodView):
             return res
         else:
             message = {"message": "Username or password is invalid. "}
-            return render_template("login.html", **message)
+            return render_template("auth/login.html", **message)
 
 
 login_view = LoginView.as_view("login")

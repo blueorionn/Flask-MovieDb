@@ -13,6 +13,9 @@ module.exports = {
   // CSS specific
   singleAttributePerLine: false,
 
+  // External plugins
+  plugins: ['prettier-plugin-tailwindcss'],
+
   // Override specific settings for different file types
   overrides: [
     {
