@@ -6,23 +6,58 @@
     <title>{% block title %} MovieDb - Collection of Movie List {% endblock %}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='styles/base.css')}}" />
     <link rel="stylesheet" href="{{url_for('static', filename='styles/style.css')}}" />
+    <style>
+      .hide {
+        display: none;
+      }
+    </style>
+    <script>
+      function getCookie(name) {
+        const value = `; ${document.cookie}`; // Prepend a semicolon for consistent splitting
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+          return parts.pop().split(';').shift(); // Extract the value before the next semicolon
+        }
+        return null; // Cookie not found
+      }
+    </script>
     <!-- Other head tags -->
     {% block head %} {% endblock %}
   </head>
   <body>
     <header class="mx-auto h-max w-full max-w-screen-2xl p-2.5 lg:p-4">
-      <nav class="w-full border-gray-200 bg-white">
-        <div class="mx-auto flex w-full flex-wrap items-center justify-between">
-          <a href="/" class="flex items-center">
-            <ion-icon name="videocam" class="mx-2 fill-blue-500" size="large"></ion-icon>
-            <span class="self-center whitespace-nowrap text-xl font-semibold">MovieDB</span>
-          </a>
-          <div class="flex items-center lg:order-2">
-            <button
-              id="logout"
-              class="mr-2 cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+      <nav class="bg-gray-50 px-6 py-4 text-white">
+        <div class="mx-auto flex max-w-7xl items-center justify-between">
+          <!-- Logo / Hero -->
+          <a href="/" class="text-2xl font-bold tracking-wide text-indigo-400">🎬 MovieZone</a>
+
+          <!-- Center: Create Movie -->
+          <div class="hidden md:block">
+            <a
+              href="/movie/create"
+              class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
             >
-              Log out
+              + Create Movie
+            </a>
+          </div>
+
+          <!-- Right: User Info -->
+          <div class="flex items-center space-x-4">
+            <span class="hidden text-sm font-medium text-gray-300 sm:inline">
+              <script>
+                const payloadValue = atob(getCookie('token').split('.')[1]);
+                document.getElementById('logged-in-username').innerText = `Hello, ${JSON.parse(payloadValue).user}`;
+              </script>
+            </span>
+            <button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium hover:bg-red-500" id="logout-button">
+              <span>Logout</span>
+              <script>
+                const logOutButton = document.getElementById('logout-button');
+                logOutButton.addEventListener('click', function () {
+                  document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+                  location.reload(true);
+                });
+              </script>
             </button>
           </div>
         </div>
@@ -34,13 +69,5 @@
     {% endblock %}
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script>
-      // Logout Mechanism
-      const logOutButton = document.querySelector('button#logout');
-      logOutButton.addEventListener('click', function () {
-        document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        location.reload(true);
-      });
-    </script>
   </body>
 </html>

@@ -4,6 +4,22 @@ import os
 import pymongo
 from pymongo.collection import Collection
 
+def get_user_by_id(user_id: str):
+    """Get User by Id"""
+
+    # creating pymongo client
+    mongo_client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
+
+    # auth database
+    auth_db = mongo_client["auth"]
+
+    # user collection
+    user_collection: Collection = auth_db["user"]
+
+    # getting user
+    user = user_collection.find_one({"id": user_id})
+
+    return user
 
 def list_movies():
     """List all movies"""

@@ -3,7 +3,8 @@
 import os
 from flask import current_app, request, Blueprint, render_template, send_file
 from flask.views import MethodView
-from .func import list_movies, get_movie, update_movie
+from moviedb.auth.func import decode_jwt_token
+from .func import get_user_by_id, list_movies, get_movie, update_movie
 
 blueprint = Blueprint("core", __name__)
 
@@ -13,6 +14,18 @@ class IndexView(MethodView):
         movies = list_movies()
         context = {"movies": movies}
         return render_template("index.html", **context)
+
+
+class ProfileView(MethodView):
+    def get(self):
+
+        if request.cookies.get("token") is not None:
+            token = request.cookies.get("token")
+            user_id = decode_jwt_token(token)["user_id"]
+
+        context = {"user": get_user_by_id(user_id)}
+        print(context, user_id)
+        return render_template("profile/profile.html", **context)
 
 
 @blueprint.route("/movie/poster/<filename>")
@@ -27,7 +40,7 @@ class UpdateMovie(MethodView):
         # get movie
         movie = get_movie(str(movie_id))
         context = {"movie": movie}
-        return render_template("movie.html", **context)
+        return render_template("update.html", **context)
 
     def post(self, movie_id):
         title = request.form.get("title")
@@ -60,4 +73,7 @@ index_view = IndexView.as_view("home")
 blueprint.add_url_rule("/", view_func=index_view)
 
 update_view = UpdateMovie.as_view("update_movie")
-blueprint.add_url_rule("/movie/<uuid:movie_id>", view_func=update_view)
+blueprint.add_url_rule("/update/<uuid:movie_id>", view_func=update_view)
+
+profile_view = ProfileView.as_view("profile")
+blueprint.add_url_rule("/user/profile", view_func=profile_view)
