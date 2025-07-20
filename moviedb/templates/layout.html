@@ -39,6 +39,7 @@
       const logOutButton = document.querySelector('button#logout');
       logOutButton.addEventListener('click', function () {
         document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        location.reload(true);
       });
     </script>
   </body>
