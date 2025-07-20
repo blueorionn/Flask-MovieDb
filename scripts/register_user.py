@@ -80,6 +80,7 @@ def main():
         "last_name": last_name,
         "username": user_name,
         "password": password.decode("utf-8"),
+        "role": "user",
         "created_at": created_at,
     }
     user_collection.insert_one(data)

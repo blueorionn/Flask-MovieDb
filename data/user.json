@@ -1,0 +1,13 @@
+{
+  "id": "c4d8555e-71c1-440d-b720-662094204a80",
+  "firstname": "ray",
+  "last_name": null,
+  "username": "ray",
+  "password": "$2b$12$3bVISg1nwE5WCqn//lVhm.NeqUdh3nnJuiAXJDA6ubRmZkKhGu/7O",
+  "role": "admin",
+  "created_at": {
+    "$date": {
+      "$numberLong": "1752310372518"
+    }
+  }
+}
