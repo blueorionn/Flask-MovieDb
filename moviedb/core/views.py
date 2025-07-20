@@ -95,7 +95,6 @@ class UpdateMovie(MethodView):
                         "description": description,
                     },
                 )
-
                 context = {"movie": movie}
                 return render_template("update.html", **context)
             else:
