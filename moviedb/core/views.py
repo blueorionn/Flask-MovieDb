@@ -23,9 +23,13 @@ class ProfileView(MethodView):
             token = request.cookies.get("token")
             user_id = decode_jwt_token(token)["user_id"]
 
-        context = {"user": get_user_by_id(user_id)}
-        print(context, user_id)
-        return render_template("profile/profile.html", **context)
+            context = {"user": get_user_by_id(user_id)}
+            return render_template("profile/profile.html", **context)
+        else:
+            return render_template(
+                "handlers/handler.html",
+                context={"error_code": 401, "error_message": "Unauthorized"},
+            )
 
 
 @blueprint.route("/movie/poster/<filename>")
@@ -37,12 +41,32 @@ def serve_poster(filename):
 
 class UpdateMovie(MethodView):
     def get(self, movie_id):
-        # get movie
-        movie = get_movie(str(movie_id))
-        context = {"movie": movie}
-        return render_template("update.html", **context)
+        """Update Movie by Id if the user is authorized"""
+
+        if request.cookies.get("token") is not None:
+            token = request.cookies.get("token")
+            user_id = decode_jwt_token(token)["user_id"]
+
+            # get movie and check if user is authorized
+            movie = get_movie(str(movie_id))
+
+            if user_id == movie["created_by"]:
+                context = {"movie": movie}
+                return render_template("update.html", **context)
+            else:
+                return render_template(
+                    "handlers/handler.html",
+                    context={"error_code": 403, "error_message": "Forbidden"},
+                )
+        else:
+            return render_template(
+                "handlers/handler.html",
+                context={"error_code": 401, "error_message": "Unauthorized"},
+            )
 
     def post(self, movie_id):
+        """Update Movie by Id if the user is authorized"""
+
         title = request.form.get("title")
         release_year = request.form.get("release_year")
         rating = request.form.get("rating")
@@ -50,30 +74,42 @@ class UpdateMovie(MethodView):
         poster = request.form.get("poster")
         description = request.form.get("description")
 
-        # update document
-        update_movie(
-            str(movie_id),
-            {
-                "title": title,
-                "release_year": release_year,
-                "rating": rating,
-                "genre": genre,
-                "poster": poster,
-                "description": description,
-            },
-        )
+        if request.cookies.get("token") is not None:
+            token = request.cookies.get("token")
+            user_id = decode_jwt_token(token)["user_id"]
 
-        # requesting for updated movie object
-        movie = get_movie(str(movie_id))
-        context = {"movie": movie}
-        return render_template("movie.html", **context)
+            # get movie and check if user is authorized
+            movie = get_movie(str(movie_id))
+
+            if user_id == movie["created_by"]:
+                context = {"movie": movie}
+                # update document
+                update_movie(
+                    str(movie_id),
+                    {
+                        "title": title,
+                        "release_year": release_year,
+                        "rating": rating,
+                        "genre": genre,
+                        "poster": poster,
+                        "description": description,
+                    },
+                )
+
+                context = {"movie": movie}
+                return render_template("update.html", **context)
+            else:
+                return render_template(
+                    "handlers/handler.html",
+                    context={"error_code": 403, "error_message": "Forbidden"},
+                )
 
 
 index_view = IndexView.as_view("home")
 blueprint.add_url_rule("/", view_func=index_view)
 
 update_view = UpdateMovie.as_view("update_movie")
-blueprint.add_url_rule("/update/<uuid:movie_id>", view_func=update_view)
+blueprint.add_url_rule("/movie/update/<uuid:movie_id>", view_func=update_view)
 
 profile_view = ProfileView.as_view("profile")
 blueprint.add_url_rule("/user/profile", view_func=profile_view)

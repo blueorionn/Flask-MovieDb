@@ -1,0 +1,211 @@
+{% extends "layout.html" %} {% block title %} Update Movie - {{ movie.title }} {% endblock %} {% block content %}
+<!-- <main>
+  <section class="w-full py-12">
+    <div class="w-full pb-8">
+      {% if message %}
+      <p class="mx-auto w-max rounded-md border-2 border-gray-400 p-2 text-gray-600" id="message">
+        <script>
+          const message = document.querySelector('p#message');
+          setTimeout(() => {
+            message.classList.add('hide');
+          }, 2000);
+        </script>
+      </p>
+      {% endif %}
+    </div>
+    <div class="mx-auto max-w-screen-2xl">
+      <h1 class="mx-auto w-max text-xl font-semibold text-gray-600">Update Movie Table</h1>
+
+      <form action="/movie/{{ movie.id }}" method="post" class="mx-auto max-w-screen-sm p-4">
+        <div class="my-2.5">
+          <label for="title" class="my-1 text-base font-semibold text-gray-700">Movie Title</label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Title"
+            required
+            autofocus
+            class="w-full rounded border border-gray-300 p-2.5"
+            value="{{ movie.title }}"
+          />
+        </div>
+        <div class="my-2.5">
+          <label for="year" class="my-1 text-base font-semibold text-gray-700">Release Year</label>
+          <input
+            type="number"
+            name="release_year"
+            id="release_year"
+            placeholder="2024"
+            required
+            class="w-full rounded border border-gray-300 p-2.5"
+            value="{{ movie.release_year }}"
+          />
+        </div>
+        <div class="my-2.5">
+          <label for="rating" class="my-1 text-base font-semibold text-gray-700">Rating</label>
+          <input
+            type="number"
+            name="rating"
+            id="rating"
+            placeholder="9.8"
+            min="0"
+            max="10.0"
+            step="0.1"
+            required
+            class="w-full rounded border border-gray-300 p-2.5"
+            value="{{ movie.rating }}"
+          />
+        </div>
+        <div class="my-2.5">
+          <label for="genre" class="my-1 text-base font-semibold text-gray-700">Genre</label>
+          <input
+            type="text"
+            name="genre"
+            id="genre"
+            placeholder="Action"
+            required
+            class="w-full rounded border border-gray-300 p-2.5"
+            value="{{ movie.genre }}"
+          />
+        </div>
+        <div class="my-2.5">
+          <label for="poster" class="my-1 text-base font-semibold text-gray-700">Poster</label>
+          <input
+            type="text"
+            name="poster"
+            id="poster"
+            placeholder="poster.jpg"
+            required
+            class="w-full rounded border border-gray-300 p-2.5"
+            value="{{ movie.poster }}"
+          />
+        </div>
+        <div class="my-2.5">
+          <label for="description" class="my-1 text-base font-semibold text-gray-700">Description</label>
+          <textarea
+            name="description"
+            id="description"
+            class="w-full resize-none rounded border border-gray-300 p-2.5"
+            rows="5"
+            required
+          >
+{{ movie.description }}</textarea
+          >
+        </div>
+        <div class="my-2.5">
+          <button type="submit" class="w-full rounded bg-blue-500 p-2.5">
+            <span class="font-bold text-gray-50">Submit</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main> -->
+<main class="mx-auto flex max-w-4xl flex-col overflow-hidden rounded-xl bg-white shadow-xl md:flex-row">
+  <!-- Left: Movie Poster and Upload -->
+  <div class="flex flex-col items-center justify-center bg-gray-50 p-6 md:w-1/3">
+    <img
+      src="/movie/poster/{{ movie.poster }}"
+      alt="{{ movie.title }}"
+      class="mb-4 h-72 w-48 rounded-md object-cover shadow"
+    />
+    <label class="block w-full">
+      <span class="text-sm font-medium text-gray-700">Change Poster</span>
+      <input
+        type="file"
+        name="poster"
+        class="mt-2 block w-full cursor-pointer text-sm text-gray-600 file:mr-4 file:rounded file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100"
+      />
+    </label>
+  </div>
+
+  <!-- Right: Movie Info Form -->
+  <form method="POST" enctype="multipart/form-data" class="space-y-5 p-6 md:w-2/3">
+    <h2 class="text-xl font-semibold text-gray-800">Update Movie</h2>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Title</label>
+      <input
+        type="text"
+        name="title"
+        value="{{ movie.title }}"
+        class="mt-1 w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Release Year</label>
+      <input
+        type="number"
+        name="year"
+        value="{{ movie.release_year }}"
+        min="1900"
+        max="2100"
+        class="mt-1 w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Rating</label>
+      <input
+        type="number"
+        name="rating"
+        value="{{ movie.rating }}"
+        step="0.1"
+        min="0"
+        max="10"
+        class="mt-1 w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Genre</label>
+      <input
+        type="text"
+        name="genre"
+        value="{{ movie.genre }}"
+        class="mt-1 w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
+
+    <div class="flex items-center">
+      <input
+        type="checkbox"
+        name="is_private"
+        id="is_private"
+        {%
+        if
+        movie.is_private
+        %}
+        checked
+        {%
+        endif
+        %}
+        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+      />
+      <label for="is_private" class="ml-2 block text-sm text-gray-700"> Private Movie (Only visible to you) </label>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Description</label>
+      <textarea
+        name="description"
+        rows="4"
+        class="mt-1 w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      >
+{{ movie.description }}</textarea
+      >
+    </div>
+
+    <div class="pt-4">
+      <button
+        type="submit"
+        class="w-full rounded-md bg-indigo-600 px-4 py-2 font-semibold text-white shadow hover:bg-indigo-500"
+      >
+        Save Changes
+      </button>
+    </div>
+  </form>
+</main>
+{% endblock %}

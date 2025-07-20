@@ -4,6 +4,7 @@ import os
 import pymongo
 from pymongo.collection import Collection
 
+
 def get_user_by_id(user_id: str):
     """Get User by Id"""
 
@@ -20,6 +21,7 @@ def get_user_by_id(user_id: str):
     user = user_collection.find_one({"id": user_id})
 
     return user
+
 
 def list_movies():
     """List all movies"""
