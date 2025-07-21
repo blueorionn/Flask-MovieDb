@@ -26,7 +26,7 @@
   </head>
   <body>
     <header class="mx-auto h-max w-full max-w-screen-2xl p-2.5 lg:p-4">
-      <nav class="bg-gray-50 px-6 py-4 text-white">
+      <nav class="bg-transparent px-6 py-4 text-white">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
           <!-- Logo / Hero -->
           <a href="/" class="text-2xl font-bold tracking-wide text-indigo-400">🎬 MovieZone</a>
@@ -49,12 +49,16 @@
 
           <!-- Right: User Info -->
           <div class="flex items-center space-x-4">
-            <span class="hidden text-sm font-medium text-gray-300 sm:inline">
+            <a href="/user/profile" class="flex flex-col items-center">
+              <div
+                class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-200 text-sm font-bold text-white"
+                id="logged-in-username"
+              ></div>
               <script>
                 const payloadValue = atob(getCookie('token').split('.')[1]);
-                document.getElementById('logged-in-username').innerText = `Hello, ${JSON.parse(payloadValue).user}`;
+                document.getElementById('logged-in-username').innerText = `${JSON.parse(payloadValue).user}`;
               </script>
-            </span>
+            </a>
             <button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium hover:bg-red-500" id="logout-button">
               <span>Logout</span>
               <script>

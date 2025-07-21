@@ -1,29 +1,22 @@
 {% extends "layout.html" %} {% block content %}
-<main>
-  <section class="w-full py-12">
-    <div class="mx-auto w-full max-w-screen-2xl px-4">
-      <div class="my-8 flex w-full flex-wrap gap-8">
-        {% for movie in movies %}
-        <div class="group grid max-w-[35rem] cursor-pointer grid-cols-2 gap-4 transition-all">
-          <div>
-            <img src="/movie/poster/{{ movie.poster }}" alt="{{ movie.title }}" class="aspect-auto h-auto w-full" />
-          </div>
-          <div>
-            <h1 class="my-2 text-2xl font-semibold text-gray-800 group-hover:underline">{{ movie.title }}</h1>
-            <!-- Released Date -->
-            <h2 class="inline-block text-base font-semibold text-gray-500">{{ movie.release_year }}</h2>
-            <!-- Genre -->
-            <span class="mx-2 text-base font-normal text-gray-600">{{ movie.genre }}</span>
-            <!-- Rating -->
-            <span class="sr-only mx-2">Divider</span>
-            <ion-icon name="star" style="color: goldenrod"></ion-icon>
-            <span class="text-base font-normal text-gray-600">{{ movie.rating }}</span>
-            <!-- Summary -->
-            <p class="py-2.5 text-base font-normal text-gray-700 group-hover:underline">{{ movie.description }}</p>
-          </div>
+<main class="h-full w-full">
+  <section class="mx-auto max-w-7xl px-6">
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {% for movie in movies %}
+      <div class="flex overflow-hidden rounded-lg bg-white shadow-md">
+        <img src="/movie/poster/{{ movie.poster }}" alt="{{ movie.title }}" class="h-48 w-32 object-cover" />
+        <div class="flex-1 p-4">
+          <h3 class="text-lg font-semibold">{{ movie.title }}</h3>
+          <p class="text-sm text-gray-600">
+            {{ movie.release_year }} • {{ movie.genre }} •
+            <span class="font-medium text-yellow-800">
+              <ion-icon name="star" style="color: goldenrod"></ion-icon> {{ movie.rating }}</span
+            >
+          </p>
+          <p class="mt-2 line-clamp-4 text-sm text-gray-700">{{ movie.description }}</p>
         </div>
-        {% endfor %}
       </div>
+      {% endfor %}
     </div>
   </section>
 </main>
