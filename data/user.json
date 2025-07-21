@@ -1,7 +1,7 @@
 {
   "id": "c4d8555e-71c1-440d-b720-662094204a80",
   "firstname": "administrator",
-  "last_name": null,
+  "lastname": null,
   "username": "admin",
   "password": "$2b$12$kgshpm9WNPMR60yxMX9OGecqTuh45aPfDBs9JjzhBxnxAKay21d8u",
   "role": "admin",

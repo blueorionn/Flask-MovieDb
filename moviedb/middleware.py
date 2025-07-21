@@ -35,10 +35,14 @@ def authentication_middleware():
 def is_token_valid(token: str):
     data = decode_jwt_token(token)
 
-    if (
-        not "user" in data.keys()
-        or (not "iat" in data.keys())
-        or (not "exp" in data.keys())
+    # Check if all required fields are present in the token
+    if len(data.keys()) < 7:
+        return False
+
+    if not all(
+        item
+        in ["id", "user", "firstname", "lastname", "role", "created_at", "iat", "exp"]
+        for item in data.keys()
     ):
         return False
 

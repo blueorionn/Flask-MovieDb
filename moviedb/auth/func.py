@@ -41,8 +41,8 @@ def authenticate_user(username: str, password: str):
         return False
 
 
-def fetch_user_id(username: str):
-    """Fetch user id from username."""
+def fetch_user(username: str):
+    """Fetch user details from username."""
 
     # creating pymongo client
     mongo_client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
@@ -57,7 +57,7 @@ def fetch_user_id(username: str):
     user = user_collection.find_one({"username": username})
 
     if user is not None and isinstance(user, dict):
-        return user["id"]
+        return user
     else:
         return None
 
@@ -68,10 +68,17 @@ def create_jwt_token(username: str):
     if not username or not isinstance(username, str):
         raise ValueError("Username must be a non-empty string.")
 
+    # fetching user details
+    user = fetch_user(username)
+
     return jwt.encode(
         {
-            "user_id": fetch_user_id(username),
+            "id": user["id"],
             "user": username,
+            "firstname": user["firstname"],
+            "lastname": user["lastname"],
+            "role": user["role"],
+            "created_at": str(user["created_at"]),
             "exp": datetime.datetime.utcnow() + timedelta(hours=1),
             "iat": datetime.datetime.utcnow(),
         },
@@ -93,3 +100,17 @@ def decode_jwt_token(token: str):
         return jwt.decode(token, os.environ.get("SECRET_KEY"), algorithms="HS256")
     except:
         return {}
+
+
+def authenticate_jwt_token(token: str):
+    """Authenticate JWT token and return user information."""
+
+    if not token or not isinstance(token, str):
+        return ValueError("Token must be a non-empty string.")
+
+    decoded_token = decode_jwt_token(token)
+
+    if "id" in decoded_token and "user" in decoded_token:
+        return decoded_token
+    else:
+        return None
