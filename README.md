@@ -1,6 +1,6 @@
 # FLASK MOVIEDB
 
-![Cover Photo](moviedb/assets/cover.png)
+![Cover Photo](moviedb/static/public/cover.png)
 
 This project is a Flask-based web application that explores JWT authentication and middlewares. The backend handles user authentication, enforcing secure login/logout mechanisms, and applying middleware for request validation and logging. This setup provides a structured way to learn about jwt based authentication, middleware functions, and nosql database in a Flask environment.
 
@@ -11,6 +11,11 @@ This project is a Flask-based web application that explores JWT authentication a
 - Flask
 - Tailwindcss
 - Mongodb
+
+## Default Credentials
+
+- **Username**: admin
+- **Password**: password
 
 ## Installation
 
