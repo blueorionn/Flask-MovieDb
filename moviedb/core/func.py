@@ -59,6 +59,46 @@ def get_movie(id: str):
     return movie
 
 
+def create_movie(
+    id: str,
+    user_id: str,
+    title: str,
+    release_year: int,
+    rating: float,
+    genre: str,
+    poster: str,
+    description: str,
+    is_private: bool,
+):
+    """Create a new movie document"""
+
+    # creating pymongo client
+    mongo_client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
+
+    # movies database
+    movies_db = mongo_client["movies"]
+
+    # movie collection
+    movie_collection: Collection = movies_db["movie"]
+
+    # insert document
+    movie_collection.insert_one(
+        {
+            "id": id,
+            "created_by": user_id,
+            "is_private": is_private,
+            "title": title,
+            "release_year": release_year,
+            "rating": rating,
+            "genre": genre,
+            "poster": poster,
+            "description": description,
+        }
+    )
+
+    return True
+
+
 def update_movie(movie_id: str, movie_data):
     """Update the movie document"""
 
@@ -75,3 +115,8 @@ def update_movie(movie_id: str, movie_data):
     movie_collection.update_one({"id": movie_id}, {"$set": movie_data})
 
     return True
+
+
+def kebab_case(text: str) -> str:
+    """Convert text to kebab case"""
+    return text.lower().replace(" ", "-")
