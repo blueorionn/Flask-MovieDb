@@ -163,5 +163,15 @@
         "genre": "Adventure",
         "poster": "howls-moving-castle.jpg",
         "description": "When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet insecure young wizard and his companions in his legged, walking castle."
-    }
+    },
+    {
+        "id":"54815d6a-c178-4ea4-b4f8-8e680b61e2f0",
+        "created_by":"c4d8555e-71c1-440d-b720-662094204a80",
+        "is_private":true,
+        "title":"Ne Zha",
+        "release_year":2019,
+        "rating":7.4,
+        "genre":"Adventure/Comedy",
+        "poster":"nezha-film-poster.jpg",
+        "description":"Ne Zha studies to acquire great skills to become a demon hunter. When he learns about his prophecy of becoming the destroyer of the world, he unwittingly transforms into his demonic form."}
 ]
