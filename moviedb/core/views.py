@@ -17,6 +17,27 @@ class IndexView(MethodView):
         return render_template("index.html", **context)
 
 
+class YourMovies(MethodView):
+    def get(self):
+        """Movies created by the logged-in user."""
+        # User data
+        user = decode_jwt_token(request.cookies.get("token"))
+
+        if (
+            authenticate_jwt_token(request.cookies.get("token")) is None
+            or user.get("id") is None
+        ):
+            return render_template(
+                "handlers/handler.html",
+                context={"error_code": 401, "error_message": "Unauthorized"},
+            )
+        else:
+            user_id = user.get("id")
+            movies = list_movies({"created_by": user_id})
+            context = {"movies": movies}
+            return render_template("index.html", **context)
+
+
 class CreateMovie(MethodView):
     def get(self):
         """Render the create movie page."""
@@ -96,6 +117,9 @@ class CreateMovie(MethodView):
 
 index_view = IndexView.as_view("home")
 blueprint.add_url_rule("/", view_func=index_view)
+
+your_movies_view = YourMovies.as_view("your_movies")
+blueprint.add_url_rule("/movies/", view_func=your_movies_view)
 
 create_view = CreateMovie.as_view("create_movie")
 blueprint.add_url_rule("/movie/create/", view_func=create_view)
