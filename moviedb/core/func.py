@@ -99,7 +99,7 @@ def create_movie(
     return True
 
 
-def update_movie(movie_id: str, movie_data):
+def update_movie(movie_id: str, movie_data={}):
     """Update the movie document"""
 
     # creating pymongo client

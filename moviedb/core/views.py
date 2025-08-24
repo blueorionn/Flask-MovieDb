@@ -128,6 +128,89 @@ class CreateMovie(MethodView):
             return redirect(f"/movie/{id}/")
 
 
+class UpdateMovie(MethodView):
+    def get(self, id):
+        """Render the update movie page."""
+
+        # Get movie data
+        movie = get_movie(id)
+        # Get logged-in user data
+        user = decode_jwt_token(request.cookies.get("token"))
+
+        # Authorization check
+        if (user["id"] != movie["created_by"]) or (
+            authenticate_jwt_token(request.cookies.get("token")) is None
+        ):
+            return render_template(
+                "handlers/handler.html",
+                context={"error_code": 401, "error_message": "Unauthorized"},
+            )
+
+        # Movie existence check
+        if movie is None:
+            return render_template(
+                "handlers/handler.html",
+                context={"error_code": 404, "error_message": "Movie Not Found"},
+            )
+        else:
+            return render_template("update.html", movie=movie)
+
+    def post(self, id):
+        """Update an existing movie."""
+        # Get logged-in user data
+        user = decode_jwt_token(request.cookies.get("token"))
+
+        # Authorization check
+        if (
+            authenticate_jwt_token(request.cookies.get("token")) is None
+            or user.get("id") is None
+        ):
+            return render_template(
+                "handlers/handler.html",
+                context={"error_code": 401, "error_message": "Unauthorized"},
+            )
+
+        # Movie data from form
+        title = request.form.get("title")
+        release_year = request.form.get("release_year")
+        rating = request.form.get("rating")
+        genre = request.form.get("genre")
+        description = request.form.get("description")
+        is_private = request.form.get("is_private")
+
+        # Processing data and saving to database
+        if is_private is None:
+            is_private = False
+        else:
+            is_private = True
+
+        try:
+            release_year = int(release_year)
+            rating = float(rating)
+
+            update_movie(
+                movie_id=id,
+                movie_data={
+                    "title": title,
+                    "release_year": int(release_year),
+                    "rating": float(rating),
+                    "genre": genre,
+                    "description": description,
+                    "is_private": is_private,
+                },
+            )
+        except ValueError:
+            return render_template(
+                "handlers/handler.html",
+                context={
+                    "error_code": 500,
+                    "error_message": "Internal Server Error",
+                },
+            )
+
+        return redirect(f"/movie/{id}/")
+
+
 index_view = IndexView.as_view("home")
 blueprint.add_url_rule("/", view_func=index_view)
 
@@ -139,6 +222,9 @@ blueprint.add_url_rule("/movie/<id>/", view_func=get_movie_view)
 
 create_view = CreateMovie.as_view("create_movie")
 blueprint.add_url_rule("/movie/create/", view_func=create_view)
+
+update_view = UpdateMovie.as_view("update_movie")
+blueprint.add_url_rule("/movie/update/<id>/", view_func=update_view)
 
 
 @blueprint.route("/movie/poster/<filename>")
