@@ -16,7 +16,6 @@ class IndexView(MethodView):
         context = {"movies": movies}
         return render_template("index.html", **context)
 
-
 class YourMovies(MethodView):
     def get(self):
         """Movies created by the logged-in user."""
@@ -37,6 +36,17 @@ class YourMovies(MethodView):
             context = {"movies": movies}
             return render_template("index.html", **context)
 
+class GetMovie(MethodView):
+    def get(self, id):
+        """Get a specific movie by its ID."""
+        movie = get_movie(id)
+        if movie is None:
+            return render_template(
+                "handlers/handler.html",
+                context={"error_code": 404, "error_message": "Movie Not Found"},
+            )
+        else:
+            return render_template("movie.html", movie=movie)
 
 class CreateMovie(MethodView):
     def get(self):
@@ -120,6 +130,9 @@ blueprint.add_url_rule("/", view_func=index_view)
 
 your_movies_view = YourMovies.as_view("your_movies")
 blueprint.add_url_rule("/movies/", view_func=your_movies_view)
+
+get_movie_view = GetMovie.as_view("get_movie")
+blueprint.add_url_rule("/movie/<id>/", view_func=get_movie_view)
 
 create_view = CreateMovie.as_view("create_movie")
 blueprint.add_url_rule("/movie/create/", view_func=create_view)
