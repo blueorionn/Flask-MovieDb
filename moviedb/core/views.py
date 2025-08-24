@@ -12,7 +12,7 @@ blueprint = Blueprint("core", __name__)
 
 class IndexView(MethodView):
     def get(self):
-        movies = list_movies()
+        movies = list_movies({"is_private": False})
         context = {"movies": movies}
         return render_template("index.html", **context)
 

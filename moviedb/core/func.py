@@ -23,7 +23,7 @@ def get_user_by_id(user_id: str):
     return user
 
 
-def list_movies():
+def list_movies(filter = {}):
     """List all movies"""
 
     # creating pymongo client
@@ -36,7 +36,7 @@ def list_movies():
     movie_collection: Collection = movies_db["movie"]
 
     # getting movies
-    movies = list(movie_collection.find({}))
+    movies = list(movie_collection.find(filter))
 
     return movies
 
