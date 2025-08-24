@@ -16,6 +16,7 @@ class IndexView(MethodView):
         context = {"movies": movies}
         return render_template("index.html", **context)
 
+
 class YourMovies(MethodView):
     def get(self):
         """Movies created by the logged-in user."""
@@ -36,6 +37,7 @@ class YourMovies(MethodView):
             context = {"movies": movies}
             return render_template("index.html", **context)
 
+
 class GetMovie(MethodView):
     def get(self, id):
         """Get a specific movie by its ID."""
@@ -47,6 +49,7 @@ class GetMovie(MethodView):
             )
         else:
             return render_template("movie.html", movie=movie)
+
 
 class CreateMovie(MethodView):
     def get(self):
