@@ -1,13 +1,28 @@
-{
-  "id": "c4d8555e-71c1-440d-b720-662094204a80",
-  "firstname": "administrator",
-  "lastname": null,
-  "username": "admin",
-  "password": "$2b$12$kgshpm9WNPMR60yxMX9OGecqTuh45aPfDBs9JjzhBxnxAKay21d8u",
-  "role": "admin",
-  "created_at": {
-    "$date": {
-      "$numberLong": "1752310372518"
+[
+  {
+    "id": "c4d8555e-71c1-440d-b720-662094204a80",
+    "firstname": "administrator",
+    "lastname": null,
+    "username": "admin",
+    "password": "$2b$12$kgshpm9WNPMR60yxMX9OGecqTuh45aPfDBs9JjzhBxnxAKay21d8u",
+    "role": "admin",
+    "created_at": {
+      "$date": {
+        "$numberLong": "1752310372518"
+      }
+    }
+  },
+  {
+    "id": "00ee3488-a185-4678-8eb3-82405b67cc0a",
+    "firstname": "user",
+    "lastname": null,
+    "username": "user",
+    "password": "$2b$12$D1FQT1YJ/atplpua1e7C0Oty96Py9j2.ujSmBYyhajPuupzpvlaqO",
+    "role": "user",
+    "created_at": {
+      "$date": {
+        "$numberLong": "1756051872"
+      }
     }
   }
-}
+]
