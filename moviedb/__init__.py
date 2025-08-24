@@ -5,6 +5,7 @@ from flask import Flask, render_template
 from moviedb.settings import config
 from moviedb.extensions import init_cors
 from moviedb import core, auth
+from .views import blueprint as base_blueprint
 from .middleware import authentication_middleware
 
 
@@ -39,6 +40,7 @@ def register_extension(app: Flask):
 def register_blueprints(app: Flask):
     """Registering blueprints."""
 
+    app.register_blueprint(base_blueprint)
     app.register_blueprint(core.views.blueprint)
     app.register_blueprint(auth.views.blueprint)
 
