@@ -1,24 +1,19 @@
 import os
 import bcrypt
-import pymongo
 import jwt
 import datetime
 from datetime import timedelta
 from moviedb.utils import is_valid_uuid_v4
 from pymongo.collection import Collection
+from moviedb.extensions import get_auth_db
 
 
 def authenticate_user(username: str, password: str):
     """Check if user exists with valid credentials."""
 
-    # creating pymongo client
-    mongo_client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
-
-    # auth database
-    auth_db = mongo_client["auth"]
-
-    # user collection
-    user_collection: Collection = auth_db["user"]
+    # Database
+    db = get_auth_db()
+    user_collection: Collection = db.user
 
     # getting user
     user = user_collection.find_one({"username": username})
@@ -44,14 +39,9 @@ def authenticate_user(username: str, password: str):
 def fetch_user(username: str):
     """Fetch user details from username."""
 
-    # creating pymongo client
-    mongo_client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
-
-    # auth database
-    auth_db = mongo_client["auth"]
-
-    # user collection
-    user_collection: Collection = auth_db["user"]
+    # Database
+    db = get_auth_db()
+    user_collection: Collection = db.user
 
     # getting user
     user = user_collection.find_one({"username": username})

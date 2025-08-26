@@ -1,10 +1,10 @@
 """Application Middleware"""
 
-import os
 import time
-import pymongo
 from flask import request, redirect
 from moviedb.auth.func import decode_jwt_token
+from moviedb.extensions import get_auth_db
+from pymongo.collection import Collection
 
 
 def authentication_middleware():
@@ -53,14 +53,9 @@ def is_token_valid(token: str):
     if int(time.time()) > exp:
         return False
 
-    # creating mongoclient
-    client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
-
-    # auth database
-    db = client["auth"]
-
-    # user collection
-    user_collection = db["user"]
+    # Database
+    db = get_auth_db()
+    user_collection: Collection = db.user
 
     # username should be unique
     fetched_user = user_collection.find_one({"username": username})

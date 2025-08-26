@@ -1,6 +1,7 @@
 """Flask extensions for additional functionalities."""
 
-from flask import Flask
+import pymongo
+from flask import Flask, g, current_app
 from flask_cors import CORS
 
 
@@ -15,3 +16,25 @@ def init_cors(app: Flask):
             }
         },
     )
+
+
+# Flask db configuration
+def get_client():
+    if "mongo_client" not in g:
+        mongo_uri = current_app.config["MONGO_URI"]
+        g.mongo_client = pymongo.MongoClient(mongo_uri)
+    return g.mongo_client
+
+
+def get_auth_db():
+    return get_client()["auth"]
+
+
+def get_movies_db():
+    return get_client()["movies"]
+
+
+def close_db(e=None):
+    client = g.pop("mongo_client", None)
+    if client is not None:
+        client.close()

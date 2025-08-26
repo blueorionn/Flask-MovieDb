@@ -3,7 +3,7 @@
 from flask import Flask, render_template
 
 from moviedb.settings import config
-from moviedb.extensions import init_cors
+from moviedb.extensions import init_cors, close_db
 from moviedb import core, auth
 from .views import blueprint as base_blueprint
 from .middleware import authentication_middleware
@@ -16,6 +16,9 @@ def create_app(config_object=config):
     """
     app = Flask(__name__)
     app.config.from_object(config_object)
+
+    # Database
+    app.teardown_appcontext(close_db)
 
     # Running middleware
     app.before_request(authentication_middleware)
