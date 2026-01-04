@@ -30,17 +30,12 @@ This project is a Flask-based web application that explores JWT authentication a
 
 Required a mongodb database local or cloud.
 
-The Project required two MongoDB databases:
+The Project required one MongoDB database with two collections:
 
-1. **auth**
-   - Contains a `users` collection.
-   - Used for autentication and user management
+- **auth**
+- **movie**
 
-2. **movies**
-   - Contains a `movie` collection.
-   - Used for storing and retrieving movie-related data
-
-### Steps
+### Project Setup
 
 1. Clone the repository:
 
@@ -78,6 +73,13 @@ The Project required two MongoDB databases:
    ```
 
 6. Open the app in your browser at `http://127.0.0.1:8000/`.
+
+7. Login to the application with one of the following set of credentials.
+
+   ```bash
+   admin:password
+   user:password
+   ```
 
 ## License
 

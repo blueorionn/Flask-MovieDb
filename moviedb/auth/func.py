@@ -5,15 +5,15 @@ import datetime
 from datetime import timedelta
 from moviedb.utils import is_valid_uuid_v4
 from pymongo.collection import Collection
-from moviedb.extensions import get_auth_db
+from moviedb.extensions import get_db
 
 
 def authenticate_user(username: str, password: str):
     """Check if user exists with valid credentials."""
 
     # Database
-    db = get_auth_db()
-    user_collection: Collection = db.user
+    db = get_db()
+    user_collection: Collection = db.auth
 
     # getting user
     user = user_collection.find_one({"username": username})
@@ -40,11 +40,12 @@ def fetch_user(username: str):
     """Fetch user details from username."""
 
     # Database
-    db = get_auth_db()
-    user_collection: Collection = db.user
+    db = get_db()
+    user_collection: Collection = db.auth
 
     # getting user
     user = user_collection.find_one({"username": username})
+    print(user_collection.find_one({}))
 
     if user is not None and isinstance(user, dict):
         return user

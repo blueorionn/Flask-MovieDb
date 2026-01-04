@@ -26,12 +26,8 @@ def get_client():
     return g.mongo_client
 
 
-def get_auth_db():
-    return get_client()["auth"]
-
-
-def get_movies_db():
-    return get_client()["movies"]
+def get_db():
+    return get_client()[current_app.config["DATABASE_NAME"]]
 
 
 def close_db(e=None):

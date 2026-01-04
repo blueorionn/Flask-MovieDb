@@ -1,15 +1,15 @@
 """Functions for view"""
 
 from pymongo.collection import Collection
-from moviedb.extensions import get_auth_db, get_movies_db
+from moviedb.extensions import get_db
 
 
 def get_user_by_id(user_id: str):
     """Get User by Id"""
 
     # Database
-    db = get_auth_db()
-    user_collection: Collection = db.user
+    db = get_db()
+    user_collection: Collection = db.auth
 
     # getting user
     user = user_collection.find_one({"id": user_id})
@@ -21,7 +21,7 @@ def list_movies(filter={}):
     """List all movies"""
 
     # Database
-    db = get_movies_db()
+    db = get_db()
     movie_collection: Collection = db.movie
 
     # getting movies
@@ -34,7 +34,7 @@ def get_movie(id: str):
     """Get Movie by Id"""
 
     # Database
-    db = get_movies_db()
+    db = get_db()
     movie_collection: Collection = db.movie
 
     # getting movies
@@ -57,7 +57,7 @@ def create_movie(
     """Create a new movie document"""
 
     # Database
-    db = get_movies_db()
+    db = get_db()
     movie_collection: Collection = db.movie
 
     # insert document
@@ -82,7 +82,7 @@ def update_movie(movie_id: str, movie_data={}):
     """Update the movie document"""
 
     # Database
-    db = get_movies_db()
+    db = get_db()
     movie_collection: Collection = db.movie
 
     # update document

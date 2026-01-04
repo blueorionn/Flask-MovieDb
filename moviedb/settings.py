@@ -11,7 +11,8 @@ class Config:
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     # File size restriction
     MAX_CONTENT_LENGTH = 24 * 1024 * 1024  # 24 megabytes
-    # Database variable
+    # Database variables
+    DATABASE_NAME = os.environ.get("DB_NAME")
     MONGO_URI = os.environ.get("MONGO_URI")
 
 

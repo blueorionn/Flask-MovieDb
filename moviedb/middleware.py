@@ -3,7 +3,7 @@
 import time
 from flask import request, redirect
 from moviedb.auth.func import decode_jwt_token
-from moviedb.extensions import get_auth_db
+from moviedb.extensions import get_db
 from pymongo.collection import Collection
 
 
@@ -54,8 +54,8 @@ def is_token_valid(token: str):
         return False
 
     # Database
-    db = get_auth_db()
-    user_collection: Collection = db.user
+    db = get_db()
+    user_collection: Collection = db.auth
 
     # username should be unique
     fetched_user = user_collection.find_one({"username": username})
