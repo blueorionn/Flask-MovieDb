@@ -12,11 +12,6 @@ This project is a Flask-based web application that explores JWT authentication a
 - Tailwindcss
 - Mongodb
 
-## Default Credentials
-
-- **Username**: admin
-- **Password**: password
-
 ## Installation
 
 ### Prerequisites
@@ -63,7 +58,8 @@ The Project required one MongoDB database with two collections:
    export PYTHONDONTWRITEBYTECODE=1
    export FLASK_ENV="development" # FLASK_ENV=production for production environment
    export SECRET_KEY="your-secret-key"
-   export MONGO_URI="mongodb+srv://<username>:<password>@<host>/?authSource=admin&retryWrites=true&w=majority&appName=default"
+   export DB_NAME="name-of-your-database"
+   export MONGO_URI="mongodb+srv://<username>:<password>@<host>/<databasename>?authSource=admin&retryWrites=true&w=majority&appName=default"
    ```
 
 5. Run the Flask app:
