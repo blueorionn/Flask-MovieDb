@@ -1,0 +1,49 @@
+[MASTER]
+# Files/directories to ignore completely
+ignore=.venv,data,node_modules,.git,.codewhale,__pycache__,.mypy_cache,.pytest_cache
+
+# Regex patterns for paths to skip
+ignore-paths=^\.venv/,^data/,^node_modules/,^\.git/,^\.codewhale/
+
+# Use multiple processes to speed up checks
+jobs=0
+
+[IMPORTS]
+# Enforce: standard library → third-party → local
+known-standard-library=
+  os,sys,json,datetime,re,math,collections,
+  itertools,typing,uuid,secrets,time,hashlib,
+  pathlib,functools,io
+
+known-third-party=
+  flask,flask_cors,jwt,pymongo,bcrypt,cryptography,
+  werkzeug,gunicorn,click
+
+[MESSAGES CONTROL]
+# --- ENABLE these (not on by default) ---
+enable=
+  print-used,
+  useless-suppression
+
+# --- DISABLE noisy / project-irrelevant checks ---
+disable=
+  C0114,C0115,C0116,        # missing docstrings
+  C0103,                     # invalid-name (too opinionated)
+  R0903,                     # too-few-public-methods
+  R0913,R0914,R0915,        # too-many-arguments/locals/statements
+  R0801,                     # duplicate-code (cross-file false positives)
+  W0511,                     # fixme (TODO/FIXME are intentional)
+  E0401,                     # import-error (may not resolve statically)
+
+[BASIC]
+# Flag these built-in function calls
+bad-functions=print,input
+
+[REPORTS]
+# Quiet output — just the score and messages
+reports=no
+score=yes
+
+[STRING]
+# Catch f-strings that don't need interpolation
+check-quote-consistency=yes

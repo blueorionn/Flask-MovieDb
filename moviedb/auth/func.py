@@ -1,10 +1,10 @@
+import datetime
+from datetime import timedelta
 import os
 import bcrypt
 import jwt
-import datetime
-from datetime import timedelta
-from moviedb.utils import is_valid_uuid_v4
 from pymongo.collection import Collection
+from moviedb.utils import is_valid_uuid_v4
 from moviedb.extensions import get_db
 
 
@@ -30,8 +30,6 @@ def authenticate_user(username: str, password: str):
             and is_valid_uuid_v4(fetched_user_id)
         ):
             return True
-        else:
-            return False
     else:
         return False
 
@@ -45,7 +43,6 @@ def fetch_user(username: str):
 
     # getting user
     user = user_collection.find_one({"username": username})
-    print(user_collection.find_one({}))
 
     if user is not None and isinstance(user, dict):
         return user
@@ -103,5 +100,3 @@ def authenticate_jwt_token(token: str):
 
     if "id" in decoded_token and "user" in decoded_token:
         return decoded_token
-    else:
-        return None

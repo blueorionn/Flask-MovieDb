@@ -8,13 +8,13 @@ blueprint = Blueprint("base", __name__)
 
 @blueprint.route("/robots.txt")
 def server_robots():
-    path = os.path.join(current_app.config["APP_DIR"], f"static/public/robots.txt")
+    path = os.path.join(current_app.config["APP_DIR"], "static/public/robots.txt")
 
     return send_file(path, mimetype="text/plain")
 
 
 @blueprint.route("/favicon.ico")
 def serve_favicon():
-    path = os.path.join(current_app.config["APP_DIR"], f"static/public/favicon.ico")
+    path = os.path.join(current_app.config["APP_DIR"], "static/public/favicon.ico")
 
     return send_file(path, mimetype="image/x-icon")

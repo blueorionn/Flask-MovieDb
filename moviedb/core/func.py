@@ -17,7 +17,7 @@ def get_user_by_id(user_id: str):
     return user
 
 
-def list_movies(filter={}):
+def list_movies(filter: dict):
     """List all movies"""
 
     # Database
@@ -78,7 +78,7 @@ def create_movie(
     return True
 
 
-def update_movie(movie_id: str, movie_data={}):
+def update_movie(movie_id: str, movie_data: dict):
     """Update the movie document"""
 
     # Database
