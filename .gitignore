@@ -20,11 +20,11 @@ __pycache__/
 .coverage
 htmlcov/
 
-# Ignore todo
-todo
-
-# Ignore secret
-.secret
+# Ignore following directories
+.todo/
+.tmp/
+.codewhale/
+.secret/
 
 # exclude tailwind utilites
 moviedb/static/styles/style.css
