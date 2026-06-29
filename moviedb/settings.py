@@ -9,10 +9,7 @@ class Config:
     SECRET_KEY = os.environ["SECRET_KEY"]
     APP_DIR = os.path.abspath(os.path.dirname(__file__))  # This directory
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
-    # File size restriction
-    MAX_CONTENT_LENGTH = 24 * 1024 * 1024  # 24 megabytes
-    # Database variables
-    DATABASE_NAME = os.environ.get("DB_NAME")
+    MAX_CONTENT_LENGTH = 24 * 1024 * 1024  # 24 megabytes (file size restriction)
     MONGO_URI = os.environ.get("MONGO_URI")
 
 

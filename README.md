@@ -4,13 +4,7 @@
 
 This project is a Flask-based web application that explores JWT authentication and middlewares. The backend handles user authentication, enforcing secure login/logout mechanisms, and applying middleware for request validation and logging. This setup provides a structured way to learn about jwt based authentication, middleware functions, and nosql database in a Flask environment.
 
-⚠️ This project is created solely for fun and learning
-
-## TechStack
-
-- Flask
-- Tailwindcss
-- Mongodb
+**⚠️ This project is created solely for fun and learning.**
 
 ## Installation
 
@@ -58,8 +52,7 @@ The Project required one MongoDB database with two collections:
    export PYTHONDONTWRITEBYTECODE=1
    export FLASK_ENV="development" # FLASK_ENV=production for production environment
    export SECRET_KEY="your-secret-key"
-   export DB_NAME="name-of-your-database"
-   export MONGO_URI="mongodb+srv://<username>:<password>@<host>/<databasename>?authSource=admin&retryWrites=true&w=majority&appName=default"
+   export MONGO_URI="mongodb+srv://<username>:<password>@<host>/<databasename>?authSource=admin&retryWrites=true&w=majority"
    ```
 
 5. Run the Flask app:
@@ -72,11 +65,8 @@ The Project required one MongoDB database with two collections:
 
 7. Login to the application with one of the following set of credentials.
 
-   ```bash
-   admin:password
-   user:password
+   ```csv
+   username,password
+   admin,password
+   user,password
    ```
-
-## License
-
-This project is released under the MIT License.

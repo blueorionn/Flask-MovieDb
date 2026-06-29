@@ -27,7 +27,7 @@ class LoginView(MethodView):
             return res
         else:
             message = {"message": "Username or password is invalid. "}
-            return render_template("auth/login.html", **message)
+            return render_template("auth/login.html", **message), 400
 
 
 class ProfileView(MethodView):

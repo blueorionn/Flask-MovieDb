@@ -3,6 +3,7 @@
 import pymongo
 from flask import Flask, g, current_app
 from flask_cors import CORS
+from pymongo.uri_parser import parse_uri
 
 
 # Flask Cors Configuration
@@ -27,7 +28,21 @@ def get_client():
 
 
 def get_db():
-    return get_client()[current_app.config["DATABASE_NAME"]]
+    uri = current_app.config["MONGO_URI"]
+    client = get_client()
+    db_name = _extract_db_name(uri)
+    if not db_name:
+        raise RuntimeError(
+            "MONGO_URI must include a database name in the path, "
+            "e.g. mongodb://localhost:27017/mydb"
+        )
+    return client[db_name]
+
+
+def _extract_db_name(uri: str) -> str | None:
+    """Extract the database name from a MongoDB URI."""
+    parsed = parse_uri(uri)
+    return parsed.get("database")
 
 
 def close_db(e=None):

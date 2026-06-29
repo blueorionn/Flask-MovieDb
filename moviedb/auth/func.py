@@ -10,28 +10,22 @@ from moviedb.extensions import get_db
 
 def authenticate_user(username: str, password: str):
     """Check if user exists with valid credentials."""
-
-    # Database
     db = get_db()
-    user_collection: Collection = db.auth
-
-    # getting user
+    user_collection: Collection = db["auth"]
     user = user_collection.find_one({"username": username})
 
-    # If user exist
-    if user is not None and isinstance(user, dict):
-        # Checking if password is correct
-        fetched_user_id, fetched_username = (user["id"], user["username"])
-        fetched_password: str = user["password"]
-
-        if (
-            (bcrypt.checkpw(password.encode("utf-8"), fetched_password.encode("utf-8")))
-            and (username == fetched_username)
-            and is_valid_uuid_v4(fetched_user_id)
-        ):
-            return True
-    else:
+    if user is None or not isinstance(user, dict):
         return False
+
+    fetched_user_id = user["id"]
+    fetched_username = user["username"]
+    fetched_password: str = user["password"]
+
+    return (
+        bcrypt.checkpw(password.encode("utf-8"), fetched_password.encode("utf-8"))
+        and username == fetched_username
+        and is_valid_uuid_v4(fetched_user_id)
+    )
 
 
 def fetch_user(username: str):
