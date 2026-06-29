@@ -60,7 +60,26 @@ Then edit `.env` with your MongoDB URI and a random **`SECRET_KEY`**
 
 ### 5. Load seed data
 
-*TODO*
+Import the seed users and movies into your database:
+
+```bash
+python scripts/load_data.py data/user.json
+python scripts/load_data.py data/movies.json
+```
+
+To re-import from scratch (drops existing data first):
+
+```bash
+python scripts/load_data.py data/user.json --drop
+python scripts/load_data.py data/movies.json --drop
+```
+
+You can also register additional users via the command line:
+
+```bash
+python scripts/register_user.py -fn Bob -u bob -p secret1234
+python scripts/register_user.py -fn Alice -u alice -p secret5678 --role admin
+```
 
 ### 6. Run
 
@@ -70,6 +89,7 @@ python wsgi.py
 
 ## Project Structure
 
+```text
 Flask-MovieDb/
 ├── wsgi.py                  # App entry point (loads .env, creates app)
 ├── moviedb/
@@ -94,6 +114,7 @@ Flask-MovieDb/
 ├── Dockerfile
 ├── requirements.txt
 └── package.json
+```
 
 ## Configuration
 
