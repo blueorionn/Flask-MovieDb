@@ -4,6 +4,7 @@ import os
 import uuid
 from flask import current_app, request, Blueprint, render_template, send_file, redirect
 from flask.views import MethodView
+from werkzeug.utils import secure_filename
 from moviedb.auth.func import authenticate_jwt_token, decode_jwt_token
 from .func import kebab_case, list_movies, get_movie, create_movie, update_movie
 
@@ -83,7 +84,7 @@ class CreateMovie(MethodView):
             )
         else:
             # save poster
-            poster_filename = kebab_case(f"{poster.filename}")
+            poster_filename = kebab_case(f"{secure_filename(poster.filename)}")
             try:
                 poster.save(
                     os.path.join(
