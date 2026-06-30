@@ -88,7 +88,7 @@ def authenticate_jwt_token(token: str):
     """Authenticate JWT token and return user information."""
 
     if not token or not isinstance(token, str):
-        return ValueError("Token must be a non-empty string.")
+        raise ValueError("Token must be a non-empty string.")
 
     decoded_token = decode_jwt_token(token)
 
