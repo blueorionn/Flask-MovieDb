@@ -1,9 +1,11 @@
 """Main application package."""
 
 from flask import Flask, render_template
+from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFError
 
 from moviedb.settings import config
-from moviedb.extensions import init_cors, close_db
+from moviedb.extensions import init_cors, init_limiter, close_db
 from moviedb import core, auth
 from .views import blueprint as base_blueprint
 from .middleware import authentication_middleware
@@ -38,6 +40,8 @@ def register_extension(app: Flask):
     """Registering extensions."""
 
     init_cors(app)
+    CSRFProtect(app)
+    init_limiter(app)
 
 
 def register_blueprints(app: Flask):
@@ -65,3 +69,14 @@ def register_error_handlers(app: Flask):
     def internal_server_error(e):
         context = {"error_code": "500", "error_message": "Internal Server Error"}
         return render_template("handlers/handler.html", context=context), 500
+
+    @app.errorhandler(CSRFError)
+    def handle_csrf_error(e):
+        # Renders a custom 400.html for failed token validation
+        context = {"error_code": "400", "error_message": "Invalid CSRF Token"}
+        return render_template("handlers/handler.html", context=context), 400
+
+    @app.errorhandler(429)
+    def too_many_requests(e):
+        context = {"error_code": "429", "error_message": "Too Many Requests"}
+        return render_template("handlers/handler.html", context=context), 429

@@ -3,6 +3,8 @@
 import pymongo
 from flask import Flask, g, current_app
 from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from pymongo.uri_parser import parse_uri
 
 
@@ -17,6 +19,14 @@ def init_cors(app: Flask):
             }
         },
     )
+
+
+# Rate Limiter Extention
+limiter = Limiter(key_func=get_remote_address)
+
+
+def init_limiter(app: Flask):
+    limiter.init_app(app)
 
 
 # Flask db configuration

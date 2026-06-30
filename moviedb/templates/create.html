@@ -19,6 +19,7 @@
       enctype="multipart/form-data"
       class="grid grid-cols-1 gap-8 md:grid-cols-2"
     >
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <!-- Left: Poster Upload -->
       <div class="flex flex-col items-center">
         <img id="poster-preview" class="hidden h-auto w-full rounded-lg shadow" alt="Poster Preview" />

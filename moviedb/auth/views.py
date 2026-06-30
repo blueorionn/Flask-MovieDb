@@ -3,6 +3,7 @@
 import datetime
 from flask import request, Blueprint, render_template, make_response, redirect
 from flask.views import MethodView
+from moviedb.extensions import limiter
 from .func import (
     authenticate_user,
     create_jwt_token,
@@ -16,6 +17,7 @@ class LoginView(MethodView):
     def get(self):
         return render_template("auth/login.html")
 
+    @limiter.limit("20 per minute")
     def post(self):
         username = request.form.get("username")
         password = request.form.get("password")
