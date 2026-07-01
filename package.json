@@ -7,8 +7,8 @@
   "scripts": {
     "watchCss": "npx tailwindcss -i ./moviedb/static/styles/tailwind.css -o ./moviedb/static/styles/style.css --watch",
     "buildCss": "npx tailwindcss -i ./moviedb/static/styles/tailwind.css -o ./moviedb/static/styles/style.css --minify",
-    "format": "prettier --write \"**/*.{html,css,js}\"",
-    "format:check": "prettier --check \"**/*.{html,css,js}\""
+    "format": "prettier --write \"**/*.{html,css,js,json}\"",
+    "format:check": "prettier --check \"**/*.{html,css,js,json}\""
   },
   "repository": {
     "type": "git",

@@ -9,7 +9,6 @@ public/
 
 # files to ignore
 *.md
-*.json
 *.yaml
 *.xml
 *.txt
