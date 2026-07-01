@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block content %}
 <main class="h-full w-full">
-  <section class="mx-auto max-w-7xl px-6 py-4">
+  <section class="mx-auto max-w-7xl px-6 py-8">
     <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {% for movie in movies %}
       <a class="flex overflow-hidden rounded-lg bg-white shadow-md" href="/movie/{{ movie.id }}">

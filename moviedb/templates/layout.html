@@ -10,73 +10,176 @@
       .hide {
         display: none;
       }
+      #logout-button {
+        cursor: pointer;
+        background: none;
+        border: none;
+      }
     </style>
     <script>
       function getCookie(name) {
-        const value = `; ${document.cookie}`; // Prepend a semicolon for consistent splitting
+        const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) {
-          return parts.pop().split(';').shift(); // Extract the value before the next semicolon
+          return parts.pop().split(';').shift();
         }
-        return null; // Cookie not found
+        return null;
       }
+
+      function logout() {
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        location.reload(true);
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuBackdrop = document.getElementById('menu-backdrop');
+        const menuClose = document.getElementById('menu-close');
+
+        function openMenu() {
+          mobileMenu.classList.remove('hidden');
+          document.body.classList.add('overflow-hidden');
+        }
+
+        function closeMenu() {
+          mobileMenu.classList.add('hidden');
+          document.body.classList.remove('overflow-hidden');
+        }
+
+        if (toggleBtn && mobileMenu) {
+          toggleBtn.addEventListener('click', openMenu);
+        }
+        if (menuBackdrop) {
+          menuBackdrop.addEventListener('click', closeMenu);
+        }
+        if (menuClose) {
+          menuClose.addEventListener('click', closeMenu);
+        }
+
+        const logoutBtn = document.getElementById('logout-button');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', logout);
+        }
+      });
     </script>
-    <!-- Other head tags -->
     {% block head %} {% endblock %}
   </head>
   <body>
-    <header class="mx-auto h-max w-full max-w-screen-2xl p-2.5 lg:p-4">
-      <nav class="bg-transparent px-6 py-4 text-white">
+    <header class="mx-auto h-max w-full p-2.5 shadow">
+      <nav class="mx-auto w-full max-w-screen-2xl bg-transparent px-6 py-2.5 text-white">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
-          <!-- Logo / Hero -->
-          <a href="/" class="text-2xl font-bold tracking-wide text-indigo-400">🎬 MovieZone</a>
+          <!-- Logo -->
+          <a href="/"
+            ><img
+              src="{{url_for('static', filename='public/favicon.png')}}"
+              alt="Movie Icon"
+              class="aspect-auto h-9 w-9 bg-cover"
+          /></a>
 
-          <!-- Center: Create Movie -->
-          <div class="hidden md:block">
-            <a
-              href="/movie/create"
-              class="mx-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
-            >
-              + Create Movie
+          <!-- Center: Action icons (desktop) -->
+          <div class="hidden gap-2.5 md:flex">
+            <a href="/movie/create">
+              <ion-icon name="add-outline" class="aspect-auto h-8 w-8 text-slate-800"></ion-icon>
             </a>
-            <a
-              href="/movies"
-              class="mx-1.5 rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-500"
-            >
-              Your Movies
+            <a href="/series">
+              <ion-icon name="easel-outline" class="aspect-auto h-8 w-8 text-slate-800"></ion-icon>
+            </a>
+            <a href="/search">
+              <ion-icon name="search-outline" class="aspect-auto h-8 w-8 text-slate-800"></ion-icon>
             </a>
           </div>
 
-          <!-- Right: User Info -->
-          <div class="flex items-center space-x-4">
-            <a href="/auth/user/profile" class="flex flex-col items-center">
-              <div
-                class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-200 text-sm font-bold text-white"
-                id="logged-in-username"
-              ></div>
-              <script>
-                const payloadValue = atob(getCookie('token').split('.')[1]);
-                document.getElementById('logged-in-username').innerText = `${JSON.parse(payloadValue).user}`;
-              </script>
+          <!-- Right: User info (desktop) -->
+          <div class="hidden items-center space-x-2.5 md:flex">
+            <a href="/auth/user/profile" class="flex items-center">
+              <ion-icon name="person-outline" class="aspect-auto h-8 w-8 text-slate-800"></ion-icon>
             </a>
-            <button class="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium hover:bg-red-500" id="logout-button">
-              <span>Logout</span>
-              <script>
-                const logOutButton = document.getElementById('logout-button');
-                logOutButton.addEventListener('click', function () {
-                  document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-                  location.reload(true);
-                });
-              </script>
+            <button id="logout-button" class="md:pt-2">
+              <span class="hidden">Logout</span>
+              <ion-icon name="log-out-outline" class="aspect-auto h-8 w-8 text-red-500"></ion-icon>
             </button>
+          </div>
+
+          <!-- Hamburger (mobile only) -->
+          <button id="menu-toggle" class="flex items-center md:hidden" aria-label="Open navigation menu">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8 text-slate-800"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile overlay menu -->
+        <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
+          <!-- Backdrop -->
+          <div id="menu-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm"></div>
+
+          <!-- Menu panel -->
+          <div class="relative mx-auto mt-20 max-w-xs">
+            <div class="flex flex-col items-center rounded-2xl bg-white p-8 shadow-2xl">
+              <!-- Close button -->
+              <div class="mb-2 flex w-full justify-end">
+                <button id="menu-close" class="flex items-center justify-center" aria-label="Close menu">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-7 w-7 text-slate-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Action icons -->
+              <div class="flex w-full items-center justify-center gap-8 py-4">
+                <a href="/movie/create" class="flex flex-col items-center gap-1.5 text-slate-700">
+                  <ion-icon name="add-outline" class="aspect-auto h-8 w-8"></ion-icon>
+                  <span class="text-xs font-medium">Create</span>
+                </a>
+                <a href="/series" class="flex flex-col items-center gap-1.5 text-slate-700">
+                  <ion-icon name="easel-outline" class="aspect-auto h-8 w-8"></ion-icon>
+                  <span class="text-xs font-medium">Series</span>
+                </a>
+                <a href="/search" class="flex flex-col items-center gap-1.5 text-slate-700">
+                  <ion-icon name="search-outline" class="aspect-auto h-8 w-8"></ion-icon>
+                  <span class="text-xs font-medium">Search</span>
+                </a>
+              </div>
+
+              <hr class="my-2 w-full border-gray-200" />
+
+              <!-- User section -->
+              <div class="flex w-full items-center justify-center gap-8 py-4">
+                <a href="/auth/user/profile" class="flex flex-col items-center gap-1.5 text-slate-700">
+                  <ion-icon name="person-outline" class="aspect-auto h-8 w-8"></ion-icon>
+                  <span class="text-xs font-medium">Profile</span>
+                </a>
+                <button
+                  onclick="logout()"
+                  class="flex cursor-pointer flex-col items-center gap-1.5 border-none bg-transparent p-0 text-red-500"
+                >
+                  <ion-icon name="log-out-outline" class="aspect-auto h-8 w-8"></ion-icon>
+                  <span class="text-xs font-medium">Logout</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
     </header>
-    <!-- Dynamic Content -->
-    {% block content %}
-    <!-- Child templates will insert content here -->
-    {% endblock %}
+
+    {% block content %} {% endblock %}
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   </body>
