@@ -49,13 +49,13 @@ class GetMovie(MethodView):
                 context={"error_code": 404, "error_message": "Movie Not Found"},
             )
         else:
-            return render_template("movie.html", movie=movie)
+            return render_template("movie/movie.html", movie=movie)
 
 
 class CreateMovie(MethodView):
     def get(self):
         """Render the create movie page."""
-        return render_template("create.html")
+        return render_template("movie/create.html")
 
     def post(self):
         """Create a new movie."""
@@ -93,7 +93,7 @@ class CreateMovie(MethodView):
                 )
             except Exception as e:
                 return render_template(
-                    "create.html",
+                    "movie/create.html",
                     context={"error": f"Failed to save poster: {str(e)}"},
                 )
 
@@ -154,7 +154,7 @@ class UpdateMovie(MethodView):
                 context={"error_code": 404, "error_message": "Movie Not Found"},
             )
         else:
-            return render_template("update.html", movie=movie)
+            return render_template("movie/update.html", movie=movie)
 
     def post(self, id):
         """Update an existing movie."""
