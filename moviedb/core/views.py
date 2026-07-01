@@ -16,6 +16,10 @@ class IndexView(MethodView):
         movies = list_movies({"is_private": False})
         context = {"movies": movies}
         return render_template("index.html", **context)
+    
+class CreateView(MethodView):
+    def get(self):
+        return render_template("misc/create.html")
 
 
 class YourMovies(MethodView):
@@ -53,10 +57,6 @@ class GetMovie(MethodView):
 
 
 class CreateMovie(MethodView):
-    def get(self):
-        """Render the create movie page."""
-        return render_template("movie/create.html")
-
     def post(self):
         """Create a new movie."""
         # User data and generated id
@@ -215,14 +215,17 @@ class UpdateMovie(MethodView):
 index_view = IndexView.as_view("home")
 blueprint.add_url_rule("/", view_func=index_view)
 
+create_view = CreateView.as_view("create")
+blueprint.add_url_rule("/create/", view_func=create_view)
+
 your_movies_view = YourMovies.as_view("your_movies")
 blueprint.add_url_rule("/movies/", view_func=your_movies_view)
 
 get_movie_view = GetMovie.as_view("get_movie")
 blueprint.add_url_rule("/movie/<id>/", view_func=get_movie_view)
 
-create_view = CreateMovie.as_view("create_movie")
-blueprint.add_url_rule("/movie/create/", view_func=create_view)
+create_movie_view = CreateMovie.as_view("create_movie")
+blueprint.add_url_rule("/movie/create/", view_func=create_movie_view)
 
 update_view = UpdateMovie.as_view("update_movie")
 blueprint.add_url_rule("/movie/update/<id>/", view_func=update_view)
