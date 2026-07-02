@@ -8,12 +8,12 @@ from werkzeug.utils import secure_filename
 
 from moviedb.auth.func import authenticate_jwt_token, decode_jwt_token
 from moviedb.utils import kebab_case
-from .func import list_movies, get_movie, create_movie, update_movie
+from .func import list_movies, get_movie, create_movie, update_movie, list_series
 
 blueprint = Blueprint("core", __name__)
 
 
-class IndexView(MethodView):
+class MoviesView(MethodView):
     def get(self):
         movies = list_movies({"is_private": False})
         context = {"movies": movies}
@@ -215,11 +215,19 @@ class UpdateMovie(MethodView):
         return redirect(f"/movie/{id}/")
 
 
-index_view = IndexView.as_view("home")
-blueprint.add_url_rule("/", view_func=index_view)
+class SeriesView(MethodView):
+    def get(self):
+        """List all series."""
+        series = list_series({"is_private": False})
+        context = {"series": series}
+        return render_template("series/series.html", **context)
+
 
 create_view = CreateView.as_view("create")
 blueprint.add_url_rule("/create/", view_func=create_view)
+
+movies_view = MoviesView.as_view("home")
+blueprint.add_url_rule("/", view_func=movies_view)
 
 your_movies_view = YourMovies.as_view("your_movies")
 blueprint.add_url_rule("/movies/", view_func=your_movies_view)
@@ -232,6 +240,9 @@ blueprint.add_url_rule("/movie/create/", view_func=create_movie_view)
 
 update_view = UpdateMovie.as_view("update_movie")
 blueprint.add_url_rule("/movie/update/<id>/", view_func=update_view)
+
+series_view = SeriesView.as_view("series")
+blueprint.add_url_rule("/series/", view_func=series_view)
 
 
 @blueprint.route("/movie/poster/<filename>")

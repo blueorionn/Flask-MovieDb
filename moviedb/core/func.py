@@ -76,3 +76,21 @@ def update_movie(movie_id: str, movie_data: dict):
     movie_collection.update_one({"id": movie_id}, {"$set": movie_data})
 
     return True
+
+
+def list_series(filter: dict):
+    """List all series with episode counts attached."""
+
+    # Database
+    db = get_db()
+    series_collection: Collection = db.series
+    episode_collection: Collection = db.episode
+
+    # getting series
+    series = list(series_collection.find(filter))
+
+    # Count episodes for each series (episodes live in a separate collection)
+    for s in series:
+        s["episode_count"] = episode_collection.count_documents({"series": s["id"]})
+
+    return series

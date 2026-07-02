@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block title %}Series{% endblock %}
+{% block content %}
+<main class="mx-auto max-w-4xl px-6 py-8">
+  <h1 class="mb-8 text-3xl font-black text-gray-900">📺 Series</h1>
+
+  {% if series %}
+    <div class="space-y-6">
+      {% for item in series %}
+        <div class="flex min-h-[220px] overflow-hidden rounded-xl bg-white shadow-md">
+          <!-- Left: Season / Episode Stats -->
+          <div class="flex min-w-[140px] flex-col items-center justify-center bg-gradient-to-b from-indigo-600 to-indigo-700 px-6 py-8 text-white">
+            <ion-icon name="tv" class="mb-1 text-3xl"></ion-icon>
+            <span class="text-4xl font-black">{{ item.seasons }}</span>
+            <span class="text-xs font-semibold uppercase tracking-widest">Season{% if item.seasons != 1 %}s{% endif %}</span>
+            <div class="my-3 h-px w-10 bg-indigo-400"></div>
+            <span class="text-3xl font-black">{{ item.episode_count }}</span>
+            <span class="text-xs font-semibold uppercase tracking-widest">Episode{% if item.episode_count != 1 %}s{% endif %}</span>
+          </div>
+
+          <!-- Poster -->
+          <div class="w-36 flex-shrink-0">
+            <img
+              src="/movie/poster/{{ item.poster }}"
+              alt="{{ item.title }}"
+              class="h-full w-full object-cover"
+            />
+          </div>
+
+          <!-- Info -->
+          <div class="flex flex-1 flex-col justify-center p-6">
+            <div class="flex items-center gap-2">
+              <h2 class="text-xl font-bold text-gray-900">{{ item.title }}</h2>
+              {% if item.is_private %}
+                <ion-icon name="lock-closed" class="shrink-0 text-gray-400"></ion-icon>
+              {% endif %}
+            </div>
+            <p class="mt-1.5 line-clamp-2 text-sm text-gray-600">{{ item.description }}</p>
+            <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-500">
+              <span>{{ item.release_year }}</span>
+              <span class="text-gray-300">|</span>
+              {% if item.genre is string %}
+                <span>{{ item.genre }}</span>
+              {% else %}
+                <span>{{ item.genre | join(', ') }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="py-20 text-center text-gray-400">
+      <ion-icon name="tv-outline" class="mb-3 text-5xl"></ion-icon>
+      <p class="text-lg">No series found yet.</p>
+      <a href="/create/" class="mt-3 inline-block text-indigo-600 hover:text-indigo-800 font-medium">Create one →</a>
+    </div>
+  {% endif %}
+</main>
+{% endblock %}
