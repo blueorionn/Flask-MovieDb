@@ -1,0 +1,102 @@
+[
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "b51445b0-36ba-436f-9e5f-4dc6dda7c212",
+    "serial": { "season": 1, "episode": 1 },
+    "title": "The Old Grist Mill",
+    "description": "Wirt and Gregory meet the Woodsman and learn about the Beast.",
+    "rating": 8.4,
+    "release_year": 2014
+  },
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "af1c2f94-d88a-4be4-baf3-5c959ee0de87",
+    "serial": { "season": 1, "episode": 2 },
+    "title": "Hard Times at the Huskin' Bee",
+    "description": "The brothers visit a town of pumpkin people and participate in a festival.",
+    "rating": 8.2,
+    "release_year": 2014
+  },
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "5881dcdb-6ce9-44ad-bbfa-077cf7379e2e",
+    "serial": { "season": 1, "episode": 3 },
+    "title": "Schooltown Follies",
+    "description": "They encounter a school attended by animals and a mysterious teacher.",
+    "rating": 8.3,
+    "release_year": 2014
+  },
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "c339c031-bb5f-432d-b4e6-76ee009a9f1c",
+    "serial": { "season": 1, "episode": 4 },
+    "title": "Songs of the Dark Lantern",
+    "description": "The duo gets lost in a tavern filled with singing frogs.",
+    "rating": 8.5,
+    "release_year": 2014
+  },
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "c78e9d2d-2ba0-4847-8ef3-b2f4a7fcd2f0",
+    "serial": { "season": 1, "episode": 5 },
+    "title": "Mad Love",
+    "description": "Wirt tries to impress a girl while Gregory searches for his frog.",
+    "rating": 8.1,
+    "release_year": 2014
+  },
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "599dd67c-757d-49a0-909e-3bb97f36ada5",
+    "serial": { "season": 1, "episode": 6 },
+    "title": "Lullaby in Frogland",
+    "description": "The brothers are captured by a frog cult.",
+    "rating": 8.3,
+    "release_year": 2014
+  },
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "e5d0ddd3-4d1a-465f-95fc-354b95994213",
+    "serial": { "season": 1, "episode": 7 },
+    "title": "The Ringing of the Bell",
+    "description": "They meet Auntie Whispers and a possessed girl named Lorna.",
+    "rating": 8.4,
+    "release_year": 2014
+  },
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "a1320030-74ec-423a-8687-070fa57cf062",
+    "serial": { "season": 1, "episode": 8 },
+    "title": "Babes in the Wood",
+    "description": "Wirt and Gregory get lost in a snowstorm and find shelter with a strange family.",
+    "rating": 8.2,
+    "release_year": 2014
+  },
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "2d502735-cfba-4853-8555-a6481a9fc882",
+    "serial": { "season": 1, "episode": 9 },
+    "title": "Into the Unknown",
+    "description": "A flashback reveals how the brothers ended up in the Unknown.",
+    "rating": 8.5,
+    "release_year": 2014
+  },
+  {
+    "series_id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "season_id": "24f6ff7c-d366-4a2a-bdff-0192426e723f",
+    "id": "74323b0a-055e-4037-8026-f7e038068cd6",
+    "serial": { "season": 1, "episode": 10 },
+    "title": "The Unknown",
+    "description": "The finale where the brothers face the Beast and find their way home.",
+    "rating": 9.1,
+    "release_year": 2014
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "3812bdb6-32d5-4180-9b09-264867f2d165",
+    "author": "c4d8555e-71c1-440d-b720-662094204a80",
+    "is_private": false,
+    "title": "Over the Garden Wall",
+    "release_year": 2014,
+    "genre": ["Animation", "Adventure", "Drama", "Horror"],
+    "poster": "over-the-garden-wall.jpg",
+    "description": "Somewhere, lost in the clouded annals of history, lies a place that few have seen. A mysterious place called The Unknown... Two Brothers, Wirt and Greg find themselves lost in the strange woods, adrift in a time. With the help of a shadowy Woodsmen and a foul-tempered bluebird named Beatrice, they travel through the foggy land in Hope of finding a way home.",
+    "seasons": [{ "number": 1, "id": "24f6ff7c-d366-4a2a-bdff-0192426e723f" }]
+  }
+]
