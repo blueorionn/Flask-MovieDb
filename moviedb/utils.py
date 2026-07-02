@@ -17,3 +17,8 @@ def is_valid_uuid_v4(id_str):
         return str(uuid_obj) == id_str
     except ValueError:
         return False
+
+
+def kebab_case(text: str) -> str:
+    """Convert text to kebab case"""
+    return text.lower().replace(" ", "-")

@@ -5,8 +5,10 @@ import uuid
 from flask import current_app, request, Blueprint, render_template, send_file, redirect
 from flask.views import MethodView
 from werkzeug.utils import secure_filename
+
 from moviedb.auth.func import authenticate_jwt_token, decode_jwt_token
-from .func import kebab_case, list_movies, get_movie, create_movie, update_movie
+from moviedb.utils import kebab_case
+from .func import list_movies, get_movie, create_movie, update_movie
 
 blueprint = Blueprint("core", __name__)
 
@@ -16,7 +18,8 @@ class IndexView(MethodView):
         movies = list_movies({"is_private": False})
         context = {"movies": movies}
         return render_template("index.html", **context)
-    
+
+
 class CreateView(MethodView):
     def get(self):
         return render_template("misc/create.html")

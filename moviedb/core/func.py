@@ -4,19 +4,6 @@ from pymongo.collection import Collection
 from moviedb.extensions import get_db
 
 
-def get_user_by_id(user_id: str):
-    """Get User by Id"""
-
-    # Database
-    db = get_db()
-    user_collection: Collection = db.auth
-
-    # getting user
-    user = user_collection.find_one({"id": user_id})
-
-    return user
-
-
 def list_movies(filter: dict):
     """List all movies"""
 
@@ -89,8 +76,3 @@ def update_movie(movie_id: str, movie_data: dict):
     movie_collection.update_one({"id": movie_id}, {"$set": movie_data})
 
     return True
-
-
-def kebab_case(text: str) -> str:
-    """Convert text to kebab case"""
-    return text.lower().replace(" ", "-")
