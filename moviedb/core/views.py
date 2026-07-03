@@ -7,7 +7,7 @@ from flask.views import MethodView
 from werkzeug.utils import secure_filename
 
 from moviedb.auth.func import authenticate_jwt_token, decode_jwt_token
-from moviedb.utils import kebab_case
+from moviedb.utils import kebab_case, upload_to_s3
 from .func import list_movies, get_movie, create_movie, update_movie, list_series
 
 blueprint = Blueprint("core", __name__)
@@ -30,7 +30,7 @@ class MoviesView(MethodView):
 
 class CreateView(MethodView):
     def get(self):
-        return render_template("misc/create.html")
+        return render_template("misc/create.html", context={})
 
 
 class YourMovies(MethodView):
@@ -94,18 +94,22 @@ class CreateMovie(MethodView):
                 context={"error_code": 401, "error_message": "Unauthorized"},
             )
         else:
-            # save poster
+            # upload poster to S3
             poster_filename = kebab_case(f"{secure_filename(poster.filename)}")
+            poster_path = "project-flask-moviedb/posters/"
             try:
-                poster.save(
-                    os.path.join(
-                        current_app.config["APP_DIR"], f"assets/{poster_filename}"
-                    )
+                poster.seek(0)
+                upload_to_s3(
+                    poster,
+                    f"{poster_path}{poster_filename}",
+                    content_type=poster.content_type,
                 )
             except Exception as e:
                 return render_template(
-                    "movie/create.html",
-                    context={"error": f"Failed to save poster: {str(e)}"},
+                    "misc/create.html",
+                    context={
+                        "error": f"Failed to upload poster: S3Error",
+                    },
                 )
 
             # Processing data and saving to database

@@ -119,6 +119,17 @@
       </button>
     </div>
 
+    <!-- Error Banner -->
+    {% if context.error %}
+    <div class="mb-6 mt-4 flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+      <ion-icon name="alert-circle" class="mt-0.5 shrink-0 text-xl text-red-500"></ion-icon>
+      <div>
+        <p class="font-semibold">Something went wrong</p>
+        <p class="mt-1 text-sm">{{ context.error }}</p>
+      </div>
+    </div>
+    {% endif %}
+
     <div class="pt-6">
       <!-- ============ MOVIE FORM ============ -->
       <form id="form-movie" action="/movie/create" method="POST" enctype="multipart/form-data">
