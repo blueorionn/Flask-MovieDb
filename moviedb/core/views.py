@@ -2,7 +2,7 @@
 
 import os
 import uuid
-from flask import current_app, request, Blueprint, render_template, send_file, redirect
+from flask import current_app, request, Blueprint, render_template, redirect
 from flask.views import MethodView
 from werkzeug.utils import secure_filename
 
@@ -11,6 +11,14 @@ from moviedb.utils import kebab_case
 from .func import list_movies, get_movie, create_movie, update_movie, list_series
 
 blueprint = Blueprint("core", __name__)
+
+
+@blueprint.route("/movie/poster/<filename>")
+def serve_poster(filename):
+    folder_prefix = "posters"
+    path = os.path.join(current_app.config["S3_BUCKET_URI"], folder_prefix, filename)
+
+    return redirect(path)
 
 
 class MoviesView(MethodView):
@@ -243,10 +251,3 @@ blueprint.add_url_rule("/movie/update/<id>/", view_func=update_view)
 
 series_view = SeriesView.as_view("series")
 blueprint.add_url_rule("/series/", view_func=series_view)
-
-
-@blueprint.route("/movie/poster/<filename>")
-def serve_poster(filename):
-    path = os.path.join(current_app.config["APP_DIR"], f"assets/{filename}")
-
-    return send_file(path, mimetype="image/jpg")

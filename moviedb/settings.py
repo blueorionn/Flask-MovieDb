@@ -11,6 +11,7 @@ class Config:
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     MAX_CONTENT_LENGTH = 24 * 1024 * 1024  # 24 megabytes (file size restriction)
     MONGO_URI = os.environ.get("MONGO_URI")
+    S3_BUCKET_URI = os.environ.get("S3_BUCKET_URI")
 
 
 class DevelopmentConfig(Config):
