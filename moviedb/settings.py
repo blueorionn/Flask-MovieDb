@@ -20,6 +20,7 @@ class DevelopmentConfig(Config):
 
     ENV = "dev"
     DEBUG = True
+    CORS_ORIGINS = "*"
 
 
 class ProductionConfig(Config):
@@ -27,6 +28,7 @@ class ProductionConfig(Config):
 
     ENV = "prod"
     DEBUG = False
+    CORS_ORIGINS = os.environ.get("CORS_ORIGINS").split(",")
 
 
 class TestingConfig(Config):

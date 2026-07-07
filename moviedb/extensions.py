@@ -10,11 +10,12 @@ from pymongo.uri_parser import parse_uri
 
 # Flask Cors Configuration
 def init_cors(app: Flask):
+    origins = app.config.get("CORS_ORIGINS")
     CORS(
         app,
         resources={
             r"/*": {
-                "origins": "*",  # Allows all origins
+                "origins": origins,
                 "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             }
         },
