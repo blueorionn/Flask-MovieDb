@@ -36,6 +36,7 @@ class TestingConfig(Config):
 
     TESTING = True
     DEBUG = True
+    CORS_ORIGINS = "*"
 
 
 if os.environ.get("FLASK_ENV") == "production":
