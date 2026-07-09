@@ -1,14 +1,18 @@
 """Auth views."""
 
 import datetime
-from flask import request, Blueprint, render_template, make_response, redirect
+from flask import request, Blueprint, render_template, make_response, redirect, url_for
 from flask.views import MethodView
-from moviedb.extensions import limiter
-from .func import (
-    authenticate_user,
-    create_jwt_token,
-    authenticate_jwt_token,
+from flask_jwt_extended import (
+    create_access_token,
+    set_access_cookies,
+    unset_jwt_cookies,
+    jwt_required,
+    get_jwt_identity,
+    get_jwt,
 )
+from moviedb.extensions import limiter
+from .func import authenticate_user, fetch_user
 
 blueprint = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -23,35 +27,49 @@ class LoginView(MethodView):
         password = request.form.get("password")
 
         if authenticate_user(username, password):
-            res = make_response(redirect("/"))
-            token = create_jwt_token(username)
-            res.set_cookie("token", token, max_age=3600, httponly=False, samesite="Lax")
+            user = fetch_user(username)
+            additional_claims = {"role": user["role"], "id": user["id"]}
+            token = create_access_token(
+                identity=username, additional_claims=additional_claims
+            )
+            res = make_response(redirect(url_for("core.home")))
+            set_access_cookies(res, token)
             return res
         else:
-            message = {"message": "Username or password is invalid. "}
+            message = {"message": "Username or password is invalid."}
             return render_template("auth/login.html", **message), 400
 
 
-class ProfileView(MethodView):
+class LogoutView(MethodView):
     def get(self):
+        res = make_response(redirect(url_for("core.home")))
+        unset_jwt_cookies(res)
+        return res
 
-        if authenticate_jwt_token(request.cookies.get("token")) is None:
-            return render_template(
-                "handlers/handler.html",
-                context={"error_code": 401, "error_message": "Unauthorized"},
-            )
-        else:
-            # user details
-            user = authenticate_jwt_token(request.cookies.get("token"))
+
+class ProfileView(MethodView):
+    @jwt_required()
+    def get(self):
+        username = get_jwt_identity()
+        claims = get_jwt()
+        user = fetch_user(username)
+        if user:
             user["created_at"] = datetime.datetime.strptime(
-                user["created_at"], "%Y-%m-%d %H:%M:%S.%f"
+                str(user["created_at"]), "%Y-%m-%d %H:%M:%S.%f"
             )
-            context = {"user": user}
-            return render_template("profile/profile.html", **context)
+            user["role"] = claims.get("role", user.get("role"))
+            return render_template("profile/profile.html", user=user)
+        return render_template(
+            "handlers/handler.html",
+            context={"error_code": 404, "error_message": "User not found."},
+        )
 
 
 login_view = LoginView.as_view("login")
 blueprint.add_url_rule("/login", view_func=login_view)
+
+logout_view = LogoutView.as_view("logout")
+blueprint.add_url_rule("/logout", view_func=logout_view)
 
 profile_view = ProfileView.as_view("profile")
 blueprint.add_url_rule("/user/profile", view_func=profile_view)

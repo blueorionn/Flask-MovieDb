@@ -1,11 +1,13 @@
 """Flask extensions for additional functionalities."""
 
 import pymongo
+from datetime import timedelta
 from flask import Flask, g, current_app
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from pymongo.uri_parser import parse_uri
+from flask_jwt_extended import JWTManager
 
 
 # Flask Cors Configuration
@@ -20,6 +22,33 @@ def init_cors(app: Flask):
             }
         },
     )
+
+
+# JWT Auth Configuration
+jwt = JWTManager()
+
+
+@jwt.unauthorized_loader
+def _custom_unauthorized_response(error_string: str):
+    from flask import render_template
+
+    return (
+        render_template(
+            "handlers/handler.html",
+            context={"error_code": "401", "error_message": "Unauthorized"},
+        ),
+        401,
+    )
+
+
+def init_jwt(app: Flask):
+    app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+    app.config["JWT_COOKIE_SECURE"] = app.config.get("ENV") == "prod"
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+    app.config["JWT_COOKIE_CSRF_PROTECT"] = False  # Flask-WTF handles CSRF
+    app.config["JWT_COOKIE_SAMESITE"] = "Lax"
+
+    jwt.init_app(app)
 
 
 # Rate Limiter Extention

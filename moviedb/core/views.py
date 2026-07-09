@@ -3,10 +3,15 @@
 import os
 import uuid
 from flask import current_app, request, Blueprint, render_template, redirect
+from flask_jwt_extended import (
+    jwt_required,
+    get_jwt_identity,
+    get_jwt,
+    verify_jwt_in_request,
+)
 from flask.views import MethodView
 from werkzeug.utils import secure_filename
 
-from moviedb.auth.func import authenticate_jwt_token, decode_jwt_token
 from moviedb.utils import kebab_case, upload_to_s3
 from .func import list_movies, get_movie, create_movie, update_movie, list_series
 
@@ -17,64 +22,62 @@ blueprint = Blueprint("core", __name__)
 def serve_poster(filename):
     folder_prefix = "posters"
     path = os.path.join(current_app.config["S3_BUCKET_URI"], folder_prefix, filename)
-
     return redirect(path)
 
 
 class MoviesView(MethodView):
     def get(self):
-        movies = list_movies({"is_private": False})
-        context = {"movies": movies}
-        return render_template("index.html", **context)
+        user_id = None
+        try:
+            verify_jwt_in_request(optional=True)
+            claims = get_jwt()
+            if claims:
+                user_id = claims.get("id")
+        except Exception:
+            pass
+
+        filter = (
+            {"$or": [{"is_private": False}, {"created_by": user_id}]}
+            if user_id
+            else {"is_private": False}
+        )
+        movies = list_movies(filter)
+        return render_template("index.html", movies=movies)
 
 
 class CreateView(MethodView):
+    @jwt_required()
     def get(self):
         return render_template("misc/create.html", context={})
 
 
 class YourMovies(MethodView):
+    @jwt_required()
     def get(self):
-        """Movies created by the logged-in user."""
-        # User data
-        user = decode_jwt_token(request.cookies.get("token"))
-
-        if (
-            authenticate_jwt_token(request.cookies.get("token")) is None
-            or user.get("id") is None
-        ):
-            return render_template(
-                "handlers/handler.html",
-                context={"error_code": 401, "error_message": "Unauthorized"},
-            )
-        else:
-            user_id = user.get("id")
-            movies = list_movies({"created_by": user_id})
-            context = {"movies": movies}
-            return render_template("index.html", **context)
+        claims = get_jwt()
+        user_id = claims.get("id")
+        movies = list_movies({"created_by": user_id})
+        return render_template("index.html", movies=movies)
 
 
 class GetMovie(MethodView):
     def get(self, id):
-        """Get a specific movie by its ID."""
         movie = get_movie(id)
         if movie is None:
             return render_template(
                 "handlers/handler.html",
                 context={"error_code": 404, "error_message": "Movie Not Found"},
             )
-        else:
-            return render_template("movie/movie.html", movie=movie)
+        return render_template("movie/movie.html", movie=movie)
 
 
 class CreateMovie(MethodView):
+    @jwt_required()
     def post(self):
-        """Create a new movie."""
-        # User data and generated id
-        user = decode_jwt_token(request.cookies.get("token"))
-        id = str(uuid.uuid4())
+        claims = get_jwt()
+        user_id = claims.get("id")
+        movie_id = str(uuid.uuid4())
 
-        # Movie data from form
         title = request.form.get("title")
         release_year = request.form.get("release_year")
         rating = request.form.get("rating")
@@ -83,118 +86,22 @@ class CreateMovie(MethodView):
         is_private = request.form.get("is_private")
         poster = request.files.get("poster")
 
-        if authenticate_jwt_token(request.cookies.get("token")) is None:
-            return render_template(
-                "handlers/handler.html",
-                context={"error_code": 401, "error_message": "Unauthorized"},
+        # upload poster to S3
+        poster_filename = kebab_case(f"{secure_filename(poster.filename)}")
+        poster_path = "project-flask-moviedb/posters/"
+        try:
+            poster.seek(0)
+            upload_to_s3(
+                poster,
+                f"{poster_path}{poster_filename}",
+                content_type=poster.content_type,
             )
-        elif user is None or user.get("id") is None:
+        except Exception:
             return render_template(
-                "handlers/handler.html",
-                context={"error_code": 401, "error_message": "Unauthorized"},
-            )
-        else:
-            # upload poster to S3
-            poster_filename = kebab_case(f"{secure_filename(poster.filename)}")
-            poster_path = "project-flask-moviedb/posters/"
-            try:
-                poster.seek(0)
-                upload_to_s3(
-                    poster,
-                    f"{poster_path}{poster_filename}",
-                    content_type=poster.content_type,
-                )
-            except Exception as e:
-                return render_template(
-                    "misc/create.html",
-                    context={
-                        "error": f"Failed to upload poster: S3Error",
-                    },
-                )
-
-            # Processing data and saving to database
-            if is_private is None:
-                is_private = False
-            else:
-                is_private = True
-
-            try:
-                release_year = int(release_year)
-                rating = float(rating)
-                create_movie(
-                    id,
-                    user["id"],
-                    title,
-                    release_year,
-                    rating,
-                    genre,
-                    poster_filename,
-                    description,
-                    is_private,
-                )
-            except ValueError:
-                return render_template(
-                    "handlers/handler.html",
-                    context={
-                        "error_code": 500,
-                        "error_message": "Internal Server Error",
-                    },
-                )
-
-            return redirect(f"/movie/{id}/")
-
-
-class UpdateMovie(MethodView):
-    def get(self, id):
-        """Render the update movie page."""
-
-        # Get movie data
-        movie = get_movie(id)
-        # Get logged-in user data
-        user = decode_jwt_token(request.cookies.get("token"))
-
-        # Authorization check
-        if (user["id"] != movie["created_by"]) or (
-            authenticate_jwt_token(request.cookies.get("token")) is None
-        ):
-            return render_template(
-                "handlers/handler.html",
-                context={"error_code": 401, "error_message": "Unauthorized"},
+                "misc/create.html",
+                context={"error": "Failed to upload poster: S3Error"},
             )
 
-        # Movie existence check
-        if movie is None:
-            return render_template(
-                "handlers/handler.html",
-                context={"error_code": 404, "error_message": "Movie Not Found"},
-            )
-        else:
-            return render_template("movie/update.html", movie=movie)
-
-    def post(self, id):
-        """Update an existing movie."""
-        # Get logged-in user data
-        user = decode_jwt_token(request.cookies.get("token"))
-
-        # Authorization check
-        if (
-            authenticate_jwt_token(request.cookies.get("token")) is None
-            or user.get("id") is None
-        ):
-            return render_template(
-                "handlers/handler.html",
-                context={"error_code": 401, "error_message": "Unauthorized"},
-            )
-
-        # Movie data from form
-        title = request.form.get("title")
-        release_year = request.form.get("release_year")
-        rating = request.form.get("rating")
-        genre = request.form.get("genre")
-        description = request.form.get("description")
-        is_private = request.form.get("is_private")
-
-        # Processing data and saving to database
         if is_private is None:
             is_private = False
         else:
@@ -203,13 +110,71 @@ class UpdateMovie(MethodView):
         try:
             release_year = int(release_year)
             rating = float(rating)
+            create_movie(
+                movie_id,
+                user_id,
+                title,
+                release_year,
+                rating,
+                genre,
+                poster_filename,
+                description,
+                is_private,
+            )
+        except ValueError:
+            return render_template(
+                "handlers/handler.html",
+                context={
+                    "error_code": 500,
+                    "error_message": "Internal Server Error",
+                },
+            )
 
+        return redirect(f"/movie/{movie_id}/")
+
+
+class UpdateMovie(MethodView):
+    @jwt_required()
+    def get(self, id):
+        movie = get_movie(id)
+        if movie is None:
+            return render_template(
+                "handlers/handler.html",
+                context={"error_code": 404, "error_message": "Movie Not Found"},
+            )
+
+        claims = get_jwt()
+        if claims.get("id") != movie.get("created_by"):
+            return render_template(
+                "handlers/handler.html",
+                context={"error_code": 401, "error_message": "Unauthorized"},
+            )
+
+        return render_template("movie/update.html", movie=movie)
+
+    @jwt_required()
+    def post(self, id):
+        title = request.form.get("title")
+        release_year = request.form.get("release_year")
+        rating = request.form.get("rating")
+        genre = request.form.get("genre")
+        description = request.form.get("description")
+        is_private = request.form.get("is_private")
+
+        if is_private is None:
+            is_private = False
+        else:
+            is_private = True
+
+        try:
+            release_year = int(release_year)
+            rating = float(rating)
             update_movie(
                 movie_id=id,
                 movie_data={
                     "title": title,
-                    "release_year": int(release_year),
-                    "rating": float(rating),
+                    "release_year": release_year,
+                    "rating": rating,
                     "genre": genre,
                     "description": description,
                     "is_private": is_private,
@@ -229,10 +194,8 @@ class UpdateMovie(MethodView):
 
 class SeriesView(MethodView):
     def get(self):
-        """List all series."""
         series = list_series({"is_private": False})
-        context = {"series": series}
-        return render_template("series/series.html", **context)
+        return render_template("series/series.html", series=series)
 
 
 create_view = CreateView.as_view("create")

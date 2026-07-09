@@ -10,27 +10,8 @@
       .hide {
         display: none;
       }
-      #logout-button {
-        cursor: pointer;
-        background: none;
-        border: none;
-      }
     </style>
     <script>
-      function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) {
-          return parts.pop().split(';').shift();
-        }
-        return null;
-      }
-
-      function logout() {
-        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        location.reload(true);
-      }
-
       document.addEventListener('DOMContentLoaded', function () {
         const toggleBtn = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -55,11 +36,6 @@
         }
         if (menuClose) {
           menuClose.addEventListener('click', closeMenu);
-        }
-
-        const logoutBtn = document.getElementById('logout-button');
-        if (logoutBtn) {
-          logoutBtn.addEventListener('click', logout);
         }
       });
     </script>
@@ -92,13 +68,16 @@
 
           <!-- Right: User info (desktop) -->
           <div class="hidden items-center space-x-2.5 md:flex">
-            <a href="/auth/user/profile" class="flex items-center">
-              <ion-icon name="person-outline" class="aspect-auto h-8 w-8 text-slate-800"></ion-icon>
-            </a>
-            <button id="logout-button" class="md:pt-2">
-              <span class="hidden">Logout</span>
-              <ion-icon name="log-out-outline" class="aspect-auto h-8 w-8 text-red-500"></ion-icon>
-            </button>
+            {% if current_user %}
+              <a href="/auth/user/profile" class="flex items-center">
+                <ion-icon name="person-outline" class="aspect-auto h-8 w-8 text-slate-800"></ion-icon>
+              </a>
+              <a href="/auth/logout" class="md:pt-2">
+                <ion-icon name="log-out-outline" class="aspect-auto h-8 w-8 text-red-500"></ion-icon>
+              </a>
+            {% else %}
+              <a href="/auth/login" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white">Login</a>
+            {% endif %}
           </div>
 
           <!-- Hamburger (mobile only) -->
@@ -160,17 +139,21 @@
 
               <!-- User section -->
               <div class="flex w-full items-center justify-center gap-8 py-4">
-                <a href="/auth/user/profile" class="flex flex-col items-center gap-1.5 text-slate-700">
-                  <ion-icon name="person-outline" class="aspect-auto h-8 w-8"></ion-icon>
-                  <span class="text-xs font-medium">Profile</span>
-                </a>
-                <button
-                  onclick="logout()"
-                  class="flex cursor-pointer flex-col items-center gap-1.5 border-none bg-transparent p-0 text-red-500"
-                >
-                  <ion-icon name="log-out-outline" class="aspect-auto h-8 w-8"></ion-icon>
-                  <span class="text-xs font-medium">Logout</span>
-                </button>
+                {% if current_user %}
+                  <a href="/auth/user/profile" class="flex flex-col items-center gap-1.5 text-slate-700">
+                    <ion-icon name="person-outline" class="aspect-auto h-8 w-8"></ion-icon>
+                    <span class="text-xs font-medium">Profile</span>
+                  </a>
+                  <a href="/auth/logout" class="flex flex-col items-center gap-1.5 text-red-500">
+                    <ion-icon name="log-out-outline" class="aspect-auto h-8 w-8"></ion-icon>
+                    <span class="text-xs font-medium">Logout</span>
+                  </a>
+                {% else %}
+                  <a href="/auth/login" class="flex flex-col items-center gap-1.5 text-slate-700">
+                    <ion-icon name="log-in-outline" class="aspect-auto h-8 w-8"></ion-icon>
+                    <span class="text-xs font-medium">Login</span>
+                  </a>
+                {% endif %}
               </div>
             </div>
           </div>
