@@ -9,7 +9,7 @@ def list_movies(filter: dict):
 
     # Database
     db = get_db()
-    movie_collection: Collection = db.movie
+    movie_collection: Collection = db["movie"]
 
     # getting movies
     movies = list(movie_collection.find(filter))
@@ -22,7 +22,7 @@ def get_movie(id: str):
 
     # Database
     db = get_db()
-    movie_collection: Collection = db.movie
+    movie_collection: Collection = db["movie"]
 
     # getting movies
     movie = movie_collection.find_one({"id": id})
@@ -45,7 +45,7 @@ def create_movie(
 
     # Database
     db = get_db()
-    movie_collection: Collection = db.movie
+    movie_collection: Collection = db["movie"]
 
     # insert document
     movie_collection.insert_one(
@@ -70,7 +70,7 @@ def update_movie(movie_id: str, movie_data: dict):
 
     # Database
     db = get_db()
-    movie_collection: Collection = db.movie
+    movie_collection: Collection = db["movie"]
 
     # update document
     movie_collection.update_one({"id": movie_id}, {"$set": movie_data})
@@ -83,8 +83,8 @@ def list_series(filter: dict):
 
     # Database
     db = get_db()
-    series_collection: Collection = db.series
-    episode_collection: Collection = db.episode
+    series_collection: Collection = db["series"]
+    episode_collection: Collection = db["episode"]
 
     # getting series
     series = list(series_collection.find(filter))

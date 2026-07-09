@@ -33,7 +33,7 @@ def fetch_user(username: str):
 
     # Database
     db = get_db()
-    user_collection: Collection = db.auth
+    user_collection: Collection = db["auth"]
 
     # getting user
     user = user_collection.find_one({"username": username})
