@@ -102,9 +102,7 @@ def main() -> None:
     # ── MongoDB connection ─────────────────────────────────────────────────
     mongo_uri = os.environ.get("MONGO_URI")
     if not mongo_uri:
-        sys.stderr.write(
-            "Error: MONGO_URI environment variable is not set.\n"
-        )
+        sys.stderr.write("Error: MONGO_URI environment variable is not set.\n")
         sys.exit(1)
 
     db_name = _extract_db_name(mongo_uri)

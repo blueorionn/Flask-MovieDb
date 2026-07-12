@@ -44,27 +44,32 @@ def main() -> None:
         epilog="User created! :)",
     )
     parser.add_argument(
-        "-fn", "--first-name",
+        "-fn",
+        "--first-name",
         required=True,
         help="First name of the user",
     )
     parser.add_argument(
-        "-ln", "--last-name",
+        "-ln",
+        "--last-name",
         default=None,
         help="Last name of the user (optional)",
     )
     parser.add_argument(
-        "-u", "--username",
+        "-u",
+        "--username",
         required=True,
         help="Username (must be unique)",
     )
     parser.add_argument(
-        "-p", "--password",
+        "-p",
+        "--password",
         required=True,
         help="Password (minimum 8 characters)",
     )
     parser.add_argument(
-        "-r", "--role",
+        "-r",
+        "--role",
         default="user",
         choices=["user", "admin"],
         help="User role (default: user)",
@@ -86,9 +91,7 @@ def main() -> None:
 
     password = args.password
     if len(password) < 8:
-        sys.stderr.write(
-            "Error: Password must be at least 8 characters long.\n"
-        )
+        sys.stderr.write("Error: Password must be at least 8 characters long.\n")
         sys.exit(1)
 
     role = args.role
