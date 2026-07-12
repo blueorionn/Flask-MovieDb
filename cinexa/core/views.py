@@ -12,7 +12,7 @@ from flask_jwt_extended import (
 from flask.views import MethodView
 from werkzeug.utils import secure_filename
 
-from moviedb.utils import kebab_case, upload_to_s3
+from cinexa.utils import kebab_case, upload_to_s3
 from .func import list_movies, get_movie, create_movie, update_movie, list_series
 
 blueprint = Blueprint("core", __name__)
@@ -88,7 +88,7 @@ class CreateMovie(MethodView):
 
         # upload poster to S3
         poster_filename = kebab_case(f"{secure_filename(poster.filename)}")
-        poster_path = "project-flask-moviedb/posters/"
+        poster_path = "project-cinexa/posters/"
         try:
             poster.seek(0)
             upload_to_s3(

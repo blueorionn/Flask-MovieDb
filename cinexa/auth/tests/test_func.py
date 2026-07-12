@@ -2,7 +2,7 @@
 
 import bcrypt
 import mongomock
-from moviedb.auth.func import authenticate_user, fetch_user
+from cinexa.auth.func import authenticate_user, fetch_user
 
 
 def _seeded_db():
@@ -21,7 +21,7 @@ def _seeded_db():
         }
     )
 
-    import moviedb.auth.func as mod
+    import cinexa.auth.func as mod
 
     mod.get_db = lambda: db  # Mock get_db to return our seeded db
 

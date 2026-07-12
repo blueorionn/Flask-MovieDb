@@ -5,9 +5,9 @@ from flask_wtf.csrf import CSRFProtect
 from flask_wtf.csrf import CSRFError
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 
-from moviedb.settings import config
-from moviedb.extensions import init_cors, init_limiter, close_db, init_jwt
-from moviedb import core, auth
+from cinexa.settings import config
+from cinexa.extensions import init_cors, init_limiter, close_db, init_jwt
+from cinexa import core, auth
 from .views import blueprint as base_blueprint
 
 

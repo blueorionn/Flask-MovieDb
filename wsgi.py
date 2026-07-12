@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # 'app' is the WSGI callable that Gunicorn looks for.
-from moviedb import create_app
+from cinexa import create_app
 
 app = create_app()
 

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./moviedb/templates/**/*.html'],
+  content: ['./cinexa/templates/**/*.html'],
   darkMode: 'selector',
   theme: {
     extend: {},

@@ -1,7 +1,7 @@
 """Functions for view"""
 
 from pymongo.collection import Collection
-from moviedb.extensions import get_db
+from cinexa.extensions import get_db
 
 
 def list_movies(filter: dict):

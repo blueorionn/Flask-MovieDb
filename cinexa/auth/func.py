@@ -1,7 +1,7 @@
 import bcrypt
 from pymongo.collection import Collection
-from moviedb.utils import is_valid_uuid_v4
-from moviedb.extensions import get_db
+from cinexa.utils import is_valid_uuid_v4
+from cinexa.extensions import get_db
 
 
 def authenticate_user(username: str, password: str):

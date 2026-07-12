@@ -1,7 +1,7 @@
 """Integration tests — login, logout, profile, protected routes."""
 
 import pytest
-from moviedb.conftest import TEST_USERNAME, TEST_PASSWORD
+from cinexa.conftest import TEST_USERNAME, TEST_PASSWORD
 
 
 class TestLogin:

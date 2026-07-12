@@ -3,8 +3,8 @@ import uuid
 import bcrypt
 import mongomock
 import pytest
-from moviedb import create_app
-from moviedb.settings import TestingConfig
+from cinexa import create_app
+from cinexa.settings import TestingConfig
 
 TEST_USER_ID = str(uuid.uuid1())
 TEST_USERNAME = "testuser"
@@ -33,7 +33,7 @@ class _MockMongoClient(mongomock.MongoClient):
 
 
 # Replace pymongo.MongoClient BEFORE create_app() imports extensions
-import moviedb.extensions as _ext
+import cinexa.extensions as _ext
 
 _ext.pymongo.MongoClient = _MockMongoClient
 
@@ -51,7 +51,7 @@ def app():
     flask_app = create_app(config_object=config)
 
     with flask_app.app_context():
-        from moviedb.extensions import get_db
+        from cinexa.extensions import get_db
 
         get_db().auth.insert_one(TEST_USER_DOC.copy())
 

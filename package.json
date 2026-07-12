@@ -1,18 +1,18 @@
 {
-  "name": "flask-moviedb",
+  "name": "cinexa",
   "version": "1.0.0",
   "description": "Movie Collection Web Application.",
   "main": "index.js",
   "private": true,
   "scripts": {
-    "watchCss": "npx tailwindcss -i ./moviedb/static/styles/tailwind.css -o ./moviedb/static/styles/style.css --watch",
-    "buildCss": "npx tailwindcss -i ./moviedb/static/styles/tailwind.css -o ./moviedb/static/styles/style.css --minify",
+    "watchCss": "npx tailwindcss -i ./cinexa/static/styles/tailwind.css -o ./cinexa/static/styles/style.css --watch",
+    "buildCss": "npx tailwindcss -i ./cinexa/static/styles/tailwind.css -o ./cinexa/static/styles/style.css --minify",
     "format": "prettier --write \"**/*.{html,css,js,json}\"",
     "format:check": "prettier --check \"**/*.{html,css,js,json}\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blueorionn/Flask-MovieDb.git"
+    "url": "git+https://github.com/blueorionn/cinexa.git"
   },
   "author": "Swadhin",
   "license": "MIT",

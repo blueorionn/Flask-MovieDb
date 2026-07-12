@@ -11,7 +11,7 @@ from flask_jwt_extended import (
     get_jwt_identity,
     get_jwt,
 )
-from moviedb.extensions import limiter
+from cinexa.extensions import limiter
 from .func import authenticate_user, fetch_user
 
 blueprint = Blueprint("auth", __name__, url_prefix="/auth")

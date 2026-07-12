@@ -1,10 +1,8 @@
-# FLASK MOVIEDB
+# Cinexa
 
-![Cover Photo](moviedb/static/public/cover.png)
+![Cover Photo](cinexa/static/public/cover.png)
 
 This project is a Flask-based web application that explores JWT authentication, middlewares and nosql database integration built only for learning
-
-**⚠️ This project is created solely for fun and learning.**
 
 ## Tech Stack
 
@@ -34,8 +32,8 @@ This project is a Flask-based web application that explores JWT authentication, 
 Clone the repository:
 
 ```bash
-git clone https://github.com/blueorionn/Flask-MovieDb.git
-cd Flask-MovieDb
+git clone https://github.com/blueorionn/cinexa.git
+cd cinexa
 ```
 
 ### 2. Python environment
@@ -90,9 +88,9 @@ python wsgi.py
 ## Project Structure
 
 ```text
-Flask-MovieDb/
+Cinexa/
 ├── wsgi.py                  # App entry point (loads .env, creates app)
-├── moviedb/
+├── cinexa/
   ├── init.py          # App factory
   ├── settings.py          # Configuration classes
   ├── extensions.py        # Flask extensions (CORS, MongoDB)
@@ -153,7 +151,7 @@ All configuration is via environment variables (loaded from `.env`):
 | `release_year` | int | Year of release |
 | `rating` | float | Rating (0–10) |
 | `genre` | string | Genre label |
-| `poster` | string | Poster filename in `moviedb/assets/` |
+| `poster` | string | Poster filename in `cinexa/assets/` |
 | `description` | string | Plot summary |
 | `is_private` | boolean | Public or user-private |
 

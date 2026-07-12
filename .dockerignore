@@ -27,4 +27,4 @@ todo
 .secret
 
 # exclude tailwind utilites
-moviedb/static/styles/style.css
+cinexa/static/styles/style.css
