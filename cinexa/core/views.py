@@ -64,9 +64,12 @@ class GetMovie(MethodView):
     def get(self, id):
         movie = get_movie(id)
         if movie is None:
-            return render_template(
-                "handlers/handler.html",
-                context={"error_code": 404, "error_message": "Movie Not Found"},
+            return (
+                render_template(
+                    "handlers/handler.html",
+                    context={"error_code": 404, "error_message": "Movie Not Found"},
+                ),
+                404,
             )
         return render_template("movie/movie.html", movie=movie)
 
@@ -97,9 +100,12 @@ class CreateMovie(MethodView):
                 content_type=poster.content_type,
             )
         except Exception:
-            return render_template(
-                "misc/create.html",
-                context={"error": "Failed to upload poster: S3Error"},
+            return (
+                render_template(
+                    "misc/create.html",
+                    context={"error": "Failed to upload poster: S3Error"},
+                ),
+                500,
             )
 
         if is_private is None:
@@ -122,12 +128,15 @@ class CreateMovie(MethodView):
                 is_private,
             )
         except ValueError:
-            return render_template(
-                "handlers/handler.html",
-                context={
-                    "error_code": 500,
-                    "error_message": "Internal Server Error",
-                },
+            return (
+                render_template(
+                    "handlers/handler.html",
+                    context={
+                        "error_code": 500,
+                        "error_message": "Internal Server Error",
+                    },
+                ),
+                500,
             )
 
         return redirect(f"/movie/{movie_id}/")
@@ -138,16 +147,22 @@ class UpdateMovie(MethodView):
     def get(self, id):
         movie = get_movie(id)
         if movie is None:
-            return render_template(
-                "handlers/handler.html",
-                context={"error_code": 404, "error_message": "Movie Not Found"},
+            return (
+                render_template(
+                    "handlers/handler.html",
+                    context={"error_code": 404, "error_message": "Movie Not Found"},
+                ),
+                404,
             )
 
         claims = get_jwt()
         if claims.get("id") != movie.get("created_by"):
-            return render_template(
-                "handlers/handler.html",
-                context={"error_code": 401, "error_message": "Unauthorized"},
+            return (
+                render_template(
+                    "handlers/handler.html",
+                    context={"error_code": 401, "error_message": "Unauthorized"},
+                ),
+                401,
             )
 
         return render_template("movie/update.html", movie=movie)
@@ -181,12 +196,15 @@ class UpdateMovie(MethodView):
                 },
             )
         except ValueError:
-            return render_template(
-                "handlers/handler.html",
-                context={
-                    "error_code": 500,
-                    "error_message": "Internal Server Error",
-                },
+            return (
+                render_template(
+                    "handlers/handler.html",
+                    context={
+                        "error_code": 500,
+                        "error_message": "Internal Server Error",
+                    },
+                ),
+                500,
             )
 
         return redirect(f"/movie/{id}/")
